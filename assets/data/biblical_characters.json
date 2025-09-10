@@ -1,0 +1,142 @@
+[
+  {
+    "name": "베드로",
+    "englishName": "Peter",
+    "mbti": "ENFP",
+    "description": "활동적이고 열정적인 전도자. 충동적이지만 사랑이 넘치는 리더",
+    "traits": ["열정적", "충동적", "사교적", "용감함"],
+    "imagePath": "assets/images/peter.png",
+    "bibleVerse": "예수께서 이르시되 시몬 바요나여 네가 복이 있도다",
+    "verseReference": "마태복음 16:17"
+  },
+  {
+    "name": "바울",
+    "englishName": "Paul",
+    "mbti": "INTJ",
+    "description": "체계적이고 전략적인 사도. 논리적 사고와 장기적 비전을 가진 선교사",
+    "traits": ["논리적", "체계적", "목표지향적", "지적"],
+    "imagePath": "assets/images/paul.png",
+    "bibleVerse": "내가 선한 싸움을 싸우고 나의 달려갈 길을 마치고",
+    "verseReference": "디모데후서 4:7"
+  },
+  {
+    "name": "돌아온탕자",
+    "englishName": "Prodigal Son",
+    "mbti": "ESFP",
+    "description": "경험을 통해 배우고 성장하는 자유로운 영혼. 실수를 통해 진정한 가치를 깨달음",
+    "traits": ["자유로움", "경험중시", "회개", "겸손"],
+    "imagePath": "assets/images/prodigal_son.png",
+    "bibleVerse": "아버지여 내가 하늘과 아버지께 죄를 범하였사오니",
+    "verseReference": "누가복음 15:21"
+  },
+  {
+    "name": "솔로몬",
+    "englishName": "Solomon",
+    "mbti": "INTP",
+    "description": "지혜와 지식을 추구하는 왕. 분석적 사고와 깊은 통찰력을 가진 지혜자",
+    "traits": ["지혜로움", "분석적", "통찰력", "지적호기심"],
+    "imagePath": "assets/images/solomon.png",
+    "bibleVerse": "지혜가 제일이니 지혜를 얻으라",
+    "verseReference": "잠언 4:7"
+  },
+  {
+    "name": "드보라",
+    "englishName": "Deborah",
+    "mbti": "ENTJ",
+    "description": "강력한 리더십과 결단력을 가진 사사. 전략적 사고와 실행력을 겸비한 지도자",
+    "traits": ["리더십", "결단력", "전략적", "정의로움"],
+    "imagePath": "assets/images/deborah.png",
+    "bibleVerse": "이스라엘 중 영웅이 없어졌도다 나 드보라가 일어나기까지",
+    "verseReference": "사사기 5:7"
+  },
+  {
+    "name": "마리아",
+    "englishName": "Mary",
+    "mbti": "ISFP",
+    "description": "온유하고 순종적인 하나님의 종. 깊은 내면의 평화와 신앙을 가진 여인",
+    "traits": ["온유함", "순종", "깊은신앙", "평화로움"],
+    "imagePath": "assets/images/mary.png",
+    "bibleVerse": "주의 여종이오니 말씀대로 내게 이루어지이다",
+    "verseReference": "누가복음 1:38"
+  },
+  {
+    "name": "다윗",
+    "englishName": "David",
+    "mbti": "ESFJ",
+    "description": "하나님의 마음에 합한 왕. 공감능력과 관계 중심의 리더십을 가진 목자왕",
+    "traits": ["공감능력", "관계중심", "음악적", "충성"],
+    "imagePath": "assets/images/david.png",
+    "bibleVerse": "여호와는 나의 목자시니 내게 부족함이 없으리로다",
+    "verseReference": "시편 23:1"
+  },
+  {
+    "name": "에스더",
+    "englishName": "Esther",
+    "mbti": "ISFJ",
+    "description": "헌신적이고 책임감 강한 왕후. 민족을 위해 자신을 희생하는 보호자",
+    "traits": ["헌신적", "책임감", "용기", "희생"],
+    "imagePath": "assets/images/esther.png",
+    "bibleVerse": "죽으면 죽으리이다",
+    "verseReference": "에스더 4:16"
+  },
+  {
+    "name": "누가",
+    "englishName": "Luke",
+    "mbti": "ISTJ",
+    "description": "정확하고 세심한 의사 겸 역사가. 체계적이고 신뢰할 수 있는 기록자",
+    "traits": ["정확성", "세심함", "체계적", "신뢰성"],
+    "imagePath": "assets/images/luke.png",
+    "bibleVerse": "모든 일을 근본부터 자세히 미루어 살핀 나도",
+    "verseReference": "누가복음 1:3"
+  },
+  {
+    "name": "바나바",
+    "englishName": "Barnabas",
+    "mbti": "ENFJ",
+    "description": "격려와 위로의 사람. 타인의 성장을 돕고 화합을 이루는 멘토",
+    "traits": ["격려", "위로", "화합", "멘토링"],
+    "imagePath": "assets/images/barnabas.png",
+    "bibleVerse": "착한 사람이요 성령과 믿음이 충만한 자라",
+    "verseReference": "사도행전 11:24"
+  },
+  {
+    "name": "리브가",
+    "englishName": "Rebekah",
+    "mbti": "ESTP",
+    "description": "실용적이고 행동력 있는 여인. 현실적 문제 해결능력과 순발력을 가진 실행가",
+    "traits": ["실용적", "행동력", "순발력", "현실적"],
+    "imagePath": "assets/images/rebekah.png",
+    "bibleVerse": "그 소녀는 보기에 심히 아름답고",
+    "verseReference": "창세기 24:16"
+  },
+  {
+    "name": "예레미야",
+    "englishName": "Jeremiah",
+    "mbti": "INFP",
+    "description": "깊은 감정과 이상을 가진 선지자. 하나님의 마음을 대변하는 민감한 영혼",
+    "traits": ["깊은감정", "이상주의", "민감함", "진실"],
+    "imagePath": "assets/images/jeremiah.png",
+    "bibleVerse": "내가 너를 모태에 짓기 전에 너를 알았고",
+    "verseReference": "예레미야 1:5"
+  },
+  {
+    "name": "노아",
+    "englishName": "Noah",
+    "mbti": "ISTJ",
+    "description": "신실하고 순종적인 의인. 하나님의 명령을 정확히 따르는 책임감 있는 실행자",
+    "traits": ["신실함", "순종", "책임감", "인내"],
+    "imagePath": "assets/images/noah.png",
+    "bibleVerse": "노아는 의인이요 당대에 완전한 자라",
+    "verseReference": "창세기 6:9"
+  },
+  {
+    "name": "라반",
+    "englishName": "Laban",
+    "mbti": "ESTJ",
+    "description": "실용적이고 관리능력이 뛰어난 사업가. 효율성과 실리를 추구하는 현실주의자",
+    "traits": ["실용성", "관리능력", "현실주의", "효율성"],
+    "imagePath": "assets/images/laban.png",
+    "bibleVerse": "네가 내 집에 온 후로 여호와께서 나에게 복을 주셨노라",
+    "verseReference": "창세기 30:27"
+  }
+]
