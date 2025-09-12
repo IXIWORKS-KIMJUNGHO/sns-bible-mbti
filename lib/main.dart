@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'presentation/screens/onboarding_screen.dart';
 import 'presentation/screens/character_selection_screen.dart';
+import 'presentation/screens/questionnaire_screen.dart';
 import 'presentation/screens/assessment_screen.dart';
 import 'presentation/screens/result_screen.dart';
 
@@ -18,6 +21,10 @@ final _router = GoRouter(
       builder: (context, state) => const CharacterSelectionScreen(),
     ),
     GoRoute(
+      path: '/questionnaire',
+      builder: (context, state) => const QuestionnaireScreen(),
+    ),
+    GoRoute(
       path: '/assessment',
       builder: (context, state) => const AssessmentScreen(),
     ),
@@ -28,7 +35,14 @@ final _router = GoRouter(
   ],
 );
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  // Firebase 초기화
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  
   runApp(const ProviderScope(child: BiblicalMbtiApp()));
 }
 

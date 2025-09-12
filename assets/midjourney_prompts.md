@@ -85,6 +85,11 @@ animated character design, Laban biblical character, front view, simple clean st
 animated character design, Peter biblical character, front view, simple clean style, fisherman robes, passionate expression, fishing net, animation style, minimal details, clean white background, soft lighting, cartoon style, game character design
 ```
 
+## 17. 돌아온 탕자 (Prodigal Son)
+```
+animated character design, Prodigal Son biblical character, front view, simple clean style, humble torn clothes transitioning to clean robes, repentant expression, empty hands showing humility, animation style, minimal details, clean white background, soft lighting, cartoon style, game character design
+```
+
 ---
 
 ## 사용 방법
@@ -109,3 +114,4 @@ animated character design, Peter biblical character, front view, simple clean st
 - rebekah.png
 - laban.png
 - peter.png
+- prodigal_son.png

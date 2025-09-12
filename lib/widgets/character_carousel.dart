@@ -59,6 +59,14 @@ class _CharacterCarouselState extends ConsumerState<CharacterCarousel>
       duration: const Duration(milliseconds: 300),
       vsync: this,
     );
+    
+    // 초기 중앙 카드 선택
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (widget.characters.isNotEmpty) {
+        final initialCharacter = widget.characters[_currentIndex];
+        _selectCharacter(initialCharacter);
+      }
+    });
   }
 
   @override
@@ -70,35 +78,56 @@ class _CharacterCarouselState extends ConsumerState<CharacterCarousel>
   }
 
   void _onPageChanged(int virtualIndex) {
+    final realIndex = virtualIndex % widget.characters.length;
     setState(() {
-      _currentIndex = virtualIndex % widget.characters.length;
+      _currentIndex = realIndex;
     });
+    
+    // 중앙 카드를 자동으로 선택
+    final centerCharacter = widget.characters[realIndex];
+    _selectCharacter(centerCharacter);
   }
   
   // 중앙에서의 거리를 계산하여 스케일 반환
   double _getScale(int virtualIndex) {
     final distance = (virtualIndex - _currentPage).abs();
-    if (distance <= 1.0) {
-      // 중앙 카드는 1.0, 인접 카드는 0.85로 선형 변화
-      return 1.0 - (distance * 0.15);
+    
+    // 부드러운 스케일 전환을 위한 Ease Out Cubic 곡선 적용
+    if (distance <= 0.5) {
+      // 중앙에 매우 가까운 카드
+      return 1.0 - (distance * 0.2);
+    } else if (distance <= 1.0) {
+      // 중앙 카드와 인접 카드 사이
+      final t = (distance - 0.5) * 2;
+      return 0.9 - (t * 0.1);
     } else if (distance <= 2.0) {
-      // 2번째 인접 카드는 0.7로 선형 변화
-      return 0.85 - ((distance - 1.0) * 0.15);
+      // 1-2번째 거리의 카드
+      final t = distance - 1.0;
+      return 0.8 - (t * 0.1);
+    } else if (distance <= 3.0) {
+      // 2-3번째 거리의 카드
+      final t = distance - 2.0;
+      return 0.7 - (t * 0.05);
     } else {
-      // 나머지 카드는 0.6
-      return 0.6;
+      // 나머지 카드들
+      return 0.65;
     }
   }
   
   // 중앙에서의 거리를 계산하여 투명도 반환
   double _getOpacity(int virtualIndex) {
     final distance = (virtualIndex - _currentPage).abs();
-    if (distance <= 1.0) {
-      return 1.0 - (distance * 0.1);
+    
+    if (distance <= 0.5) {
+      return 1.0;
+    } else if (distance <= 1.0) {
+      return 0.95 - ((distance - 0.5) * 0.1);
     } else if (distance <= 2.0) {
-      return 0.9 - ((distance - 1.0) * 0.2);
+      return 0.85 - ((distance - 1.0) * 0.15);
+    } else if (distance <= 3.0) {
+      return 0.7 - ((distance - 2.0) * 0.1);
     } else {
-      return 0.5;
+      return 0.6;
     }
   }
 
@@ -120,17 +149,55 @@ class _CharacterCarouselState extends ConsumerState<CharacterCarousel>
     final selectedCharacter = ref.watch(selectedCharacterProvider);
     
     return SizedBox(
-      height: 460, // 카드 높이 + 여백
+      height: 520, // 카드 높이 + 호버 확대 여유 공간
       child: Column(
         children: [
-          // 캐러셀
-          SizedBox(
-            height: 420,
-            child: PageView.builder(
-              controller: _pageController,
-              onPageChanged: _onPageChanged,
-              itemCount: _virtualListSize, // 무한 스크롤을 위한 큰 수
-              itemBuilder: (context, virtualIndex) {
+          // 캐러셀과 화살표 버튼
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              SizedBox(
+                height: 480, // 420 * 1.05 (호버 스케일) + 여유 공간
+                child: GestureDetector(
+              onHorizontalDragUpdate: (details) {
+                // macOS에서 드래그 제스처 처리
+                _pageController.position.moveTo(
+                  _pageController.position.pixels - details.delta.dx,
+                );
+              },
+              onHorizontalDragEnd: (details) {
+                // 드래그 종료 시 페이지 스냅
+                final velocity = details.velocity.pixelsPerSecond.dx;
+                if (velocity.abs() > 300) {
+                  // 빠른 스와이프
+                  if (velocity > 0) {
+                    _pageController.previousPage(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeOutCubic,
+                    );
+                  } else {
+                    _pageController.nextPage(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeOutCubic,
+                    );
+                  }
+                } else {
+                  // 느린 드래그 - 가장 가까운 페이지로 스냅
+                  final page = _pageController.page?.round() ?? _initialPage;
+                  _pageController.animateToPage(
+                    page,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeOutCubic,
+                  );
+                }
+              },
+              child: PageView.builder(
+                controller: _pageController,
+                onPageChanged: _onPageChanged,
+                pageSnapping: true,
+                physics: const AlwaysScrollableScrollPhysics(), // macOS 호환성을 위해 변경
+                itemCount: _virtualListSize, // 무한 스크롤을 위한 큰 수
+                itemBuilder: (context, virtualIndex) {
                 // 실제 캐릭터 인덱스로 변환
                 final realIndex = virtualIndex % widget.characters.length;
                 final character = widget.characters[realIndex];
@@ -145,8 +212,10 @@ class _CharacterCarouselState extends ConsumerState<CharacterCarousel>
                   animation: _slideController,
                   builder: (context, child) {
                     return Center(
-                      child: Transform.scale(
+                      child: AnimatedScale(
                         scale: scale,
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeOutCubic,
                         child: Transform.translate(
                           offset: Offset(
                             isSelected ? _slideController.value * 10 - 5 : 0,
@@ -156,7 +225,7 @@ class _CharacterCarouselState extends ConsumerState<CharacterCarousel>
                             character: character,
                             isSelected: isSelected,
                             isCenter: isCenter,
-                            onTap: () => _selectCharacter(character),
+                            onTap: isCenter ? () => _selectCharacter(character) : null,
                             opacity: opacity,
                           ),
                         ),
@@ -166,6 +235,57 @@ class _CharacterCarouselState extends ConsumerState<CharacterCarousel>
                 );
               },
             ),
+            ),
+          ),
+              
+              // 왼쪽 화살표 버튼
+              Positioned(
+                left: 20,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.black.withValues(alpha: 0.5),
+                    shape: BoxShape.circle,
+                  ),
+                  child: IconButton(
+                    icon: const Icon(
+                      Icons.arrow_back_ios,
+                      color: Colors.white,
+                      size: 24,
+                    ),
+                    onPressed: () {
+                      _pageController.previousPage(
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeOutCubic,
+                      );
+                    },
+                  ),
+                ),
+              ),
+              
+              // 오른쪽 화살표 버튼
+              Positioned(
+                right: 20,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.black.withValues(alpha: 0.5),
+                    shape: BoxShape.circle,
+                  ),
+                  child: IconButton(
+                    icon: const Icon(
+                      Icons.arrow_forward_ios,
+                      color: Colors.white,
+                      size: 24,
+                    ),
+                    onPressed: () {
+                      _pageController.nextPage(
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeOutCubic,
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ],
           ),
           
           const SizedBox(height: 20),

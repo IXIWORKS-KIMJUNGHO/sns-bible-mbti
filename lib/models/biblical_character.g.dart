@@ -23,6 +23,12 @@ BiblicalCharacter _$BiblicalCharacterFromJson(Map<String, dynamic> json) =>
       traits: (json['traits'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),
+      strengths: (json['strengths'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      growthAreas: (json['growthAreas'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
       bibleVerse: json['bibleVerse'] as String,
       verseReference: json['verseReference'] as String,
       colorTheme: json['colorTheme'] as String,
@@ -39,6 +45,8 @@ Map<String, dynamic> _$BiblicalCharacterToJson(BiblicalCharacter instance) =>
       'behaviorPatterns': instance.behaviorPatterns,
       'imageAsset': instance.imageAsset,
       'traits': instance.traits,
+      'strengths': instance.strengths,
+      'growthAreas': instance.growthAreas,
       'bibleVerse': instance.bibleVerse,
       'verseReference': instance.verseReference,
       'colorTheme': instance.colorTheme,

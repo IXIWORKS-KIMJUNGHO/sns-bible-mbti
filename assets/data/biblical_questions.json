@@ -6,37 +6,40 @@
       {
         "text": "즉시 순종하며 행동에 옮긴다",
         "scores": {
-          "david": 3,
-          "peter": 3,
-          "rebekah": 2,
-          "paul": 1
+          "david": 4,
+          "peter": 4,
+          "rebekah": 3,
+          "paul": 2,
+          "jeremiah": 1
         }
       },
       {
         "text": "깊이 기도하며 하나님의 뜻을 더 구한다",
         "scores": {
-          "mary": 3,
-          "jeremiah": 3,
-          "barnabas": 2,
-          "noah": 1
+          "mary": 4,
+          "jeremiah": 4,
+          "barnabas": 3,
+          "esther": 3
         }
       },
       {
         "text": "계획을 세우고 체계적으로 준비한다",
         "scores": {
-          "noah": 3,
-          "paul": 3,
-          "solomon": 2,
-          "deborah": 1
+          "noah": 4,
+          "moses": 4,
+          "luke": 4,
+          "solomon": 3,
+          "peter": 1
         }
       },
       {
         "text": "지혜로운 조언자들과 상의한다",
         "scores": {
-          "solomon": 3,
-          "esther": 2,
-          "luke": 2,
-          "barnabas": 1
+          "solomon": 4,
+          "esther": 5,
+          "luke": 3,
+          "barnabas": 2,
+          "david": 1
         }
       }
     ]
@@ -48,79 +51,79 @@
       {
         "text": "다른 사람들과 함께 해결책을 찾는다",
         "scores": {
-          "deborah": 3,
-          "barnabas": 3,
-          "paul": 2,
-          "esther": 1
+          "deborah": 4,
+          "barnabas": 4,
+          "paul": 3,
+          "esther": 4
         }
       },
       {
         "text": "홀로 조용한 곳에서 기도하며 답을 구한다",
         "scores": {
-          "jeremiah": 3,
-          "mary": 3,
+          "jeremiah": 4,
+          "mary": 4,
           "barnabas": 2,
-          "david": 1
+          "david": 2
         }
       },
       {
         "text": "주변 사람들을 격려하고 이끌어 나간다",
         "scores": {
-          "paul": 3,
-          "deborah": 3,
-          "peter": 2,
-          "david": 1
+          "paul": 4,
+          "deborah": 4,
+          "moses": 4,
+          "peter": 3
         }
       },
       {
         "text": "신중히 생각하고 분석한 후 행동한다",
         "scores": {
-          "solomon": 3,
-          "luke": 3,
-          "noah": 2,
-          "laban": 1
+          "solomon": 4,
+          "luke": 4,
+          "joseph": 5,
+          "noah": 3
         }
       }
     ]
   },
   {
     "id": 3,
-    "text": "새로운 교회 공동체에 들어갔을 때 당신은?",
+    "text": "새로운 공동체에 들어갔을 때 당신은?",
     "options": [
       {
         "text": "적극적으로 사람들에게 다가가 인사한다",
         "scores": {
-          "peter": 3,
-          "paul": 3,
-          "david": 2,
-          "rebekah": 1
+          "peter": 4,
+          "paul": 4,
+          "david": 3,
+          "rebekah": 2
         }
       },
       {
         "text": "먼저 관찰하며 분위기를 파악한다",
         "scores": {
-          "luke": 3,
-          "solomon": 2,
-          "laban": 2,
-          "noah": 1
+          "luke": 4,
+          "joseph": 4,
+          "solomon": 3,
+          "esther": 4
         }
       },
       {
         "text": "봉사할 곳을 찾아 섬김에 참여한다",
         "scores": {
-          "barnabas": 3,
-          "mary": 3,
-          "esther": 2,
-          "deborah": 1
+          "barnabas": 4,
+          "mary": 4,
+          "esther": 3,
+          "luke": 3
         }
       },
       {
         "text": "조용히 예배에 집중하며 은혜받기를 원한다",
         "scores": {
-          "jeremiah": 3,
-          "noah": 2,
-          "noah": 2,
-          "esther": 1
+          "jeremiah": 4,
+          "mary": 3,
+          "noah": 3,
+          "daniel": 2
         }
       }
     ]
@@ -132,37 +135,37 @@
       {
         "text": "팀원들과 소통하며 분위기를 이끈다",
         "scores": {
-          "peter": 3,
-          "paul": 3,
-          "david": 2,
-          "barnabas": 1
+          "peter": 4,
+          "paul": 4,
+          "david": 3,
+          "barnabas": 2
         }
       },
       {
         "text": "묵묵히 자신의 역할에 충실한다",
         "scores": {
-          "luke": 3,
-          "mary": 3,
-          "noah": 2,
-          "esther": 1
+          "luke": 4,
+          "mary": 4,
+          "joseph": 4,
+          "noah": 3
         }
       },
       {
         "text": "전체적인 방향을 제시하고 조직한다",
         "scores": {
-          "deborah": 3,
-          "paul": 3,
-          "solomon": 2,
-          "moses": 1
+          "moses": 4,
+          "deborah": 4,
+          "solomon": 3,
+          "paul": 3
         }
       },
       {
         "text": "깊이 있는 아이디어와 통찰을 제공한다",
         "scores": {
-          "solomon": 3,
-          "jeremiah": 3,
-          "luke": 2,
-          "daniel": 1
+          "solomon": 4,
+          "joseph": 5,
+          "jeremiah": 4,
+          "luke": 3
         }
       }
     ]
@@ -174,79 +177,81 @@
       {
         "text": "사람들과 함께 교제하며 대화한다",
         "scores": {
-          "peter": 3,
-          "paul": 3,
-          "david": 2,
-          "barnabas": 2
+          "peter": 4,
+          "paul": 4,
+          "david": 3,
+          "barnabas": 3
         }
       },
       {
         "text": "혼자만의 시간을 가지며 조용히 묵상한다",
         "scores": {
-          "jeremiah": 3,
-          "mary": 3,
-          "daniel": 2,
-          "luke": 2
+          "jeremiah": 4,
+          "mary": 4,
+          "luke": 3,
+          "daniel": 3,
+          "peter": 1
         }
       },
       {
         "text": "새로운 프로젝트나 도전에 몰입한다",
         "scores": {
-          "deborah": 3,
-          "solomon": 2,
-          "rebekah": 2,
-          "joseph": 2
+          "deborah": 4,
+          "joseph": 5,
+          "solomon": 3,
+          "rebekah": 3
         }
       },
       {
         "text": "규칙적인 일상과 안정적인 환경에서",
         "scores": {
-          "noah": 3,
-          "luke": 2,
-          "moses": 2,
-          "laban": 2
+          "noah": 4,
+          "moses": 4,
+          "luke": 4,
+          "solomon": 2
         }
       }
     ]
   },
   {
     "id": 6,
-    "text": "하나님의 말씀을 읽을 때 당신은?",
+    "text": "하나님의 말씀을 다룰 때 당신은?",
     "options": [
       {
         "text": "다른 사람들과 함께 나누며 토론한다",
         "scores": {
-          "paul": 3,
-          "barnabas": 3,
-          "peter": 2,
-          "deborah": 1
+          "paul": 4,
+          "barnabas": 4,
+          "peter": 3,
+          "deborah": 2,
+          "jeremiah": 1
         }
       },
       {
         "text": "개인적으로 묵상하며 깊이 있게 생각한다",
         "scores": {
-          "mary": 3,
-          "jeremiah": 3,
-          "daniel": 2,
-          "solomon": 2
+          "mary": 4,
+          "jeremiah": 4,
+          "daniel": 3,
+          "solomon": 3
         }
       },
       {
         "text": "실생활에 어떻게 적용할지 구체적으로 계획한다",
         "scores": {
           "noah": 3,
-          "luke": 2,
-          "moses": 2,
-          "esther": 2
+          "moses": 5,
+          "luke": 4,
+          "esther": 4
         }
       },
       {
         "text": "지혜와 통찰을 구하며 분석적으로 연구한다",
         "scores": {
-          "solomon": 3,
-          "luke": 3,
-          "paul": 2,
-          "daniel": 2
+          "solomon": 4,
+          "luke": 4,
+          "joseph": 4,
+          "daniel": 3
         }
       }
     ]
@@ -256,39 +261,39 @@
     "text": "미래에 대한 하나님의 인도하심을 구할 때?",
     "options": [
       {
-        "text": "다른 신앙의 선배들과 상담하며 조언을 구한다",
+        "text": "신뢰하는 조언자들과 상담하며 지혜를 구한다",
         "scores": {
-          "esther": 3,
-          "solomon": 2,
-          "barnabas": 2,
+          "esther": 5,
+          "solomon": 3,
+          "barnabas": 3,
           "luke": 2
         }
       },
       {
         "text": "기도와 말씀을 통해 직접 하나님께 구한다",
         "scores": {
-          "daniel": 3,
-          "jeremiah": 3,
-          "mary": 2,
-          "david": 2
+          "daniel": 4,
+          "jeremiah": 4,
+          "mary": 3,
+          "david": 3
         }
       },
       {
         "text": "여러 가능성을 분석하고 체계적으로 준비한다",
         "scores": {
-          "solomon": 3,
-          "paul": 2,
-          "luke": 2,
-          "noah": 2
+          "solomon": 4,
+          "luke": 4,
+          "joseph": 5,
+          "noah": 3
         }
       },
       {
         "text": "하나님을 신뢰하며 한 걸음씩 순종한다",
         "scores": {
-          "noah": 3,
-          "moses": 3,
-          "mary": 2,
-          "david": 2
+          "noah": 4,
+          "moses": 4,
+          "mary": 3,
+          "david": 3
         }
       }
     ]
@@ -300,37 +305,37 @@
       {
         "text": "주변 사람들과 브레인스토밍한다",
         "scores": {
-          "paul": 3,
-          "deborah": 2,
-          "barnabas": 2,
-          "peter": 2
+          "paul": 4,
+          "deborah": 3,
+          "barnabas": 3,
+          "peter": 3
         }
       },
       {
         "text": "혼자 깊이 생각하며 최선의 방법을 찾는다",
         "scores": {
-          "solomon": 3,
-          "jeremiah": 2,
-          "daniel": 2,
-          "luke": 2
+          "solomon": 4,
+          "joseph": 5,
+          "jeremiah": 3,
+          "luke": 4
         }
       },
       {
         "text": "과거 경험과 사례를 참고한다",
         "scores": {
-          "luke": 3,
-          "moses": 2,
-          "noah": 2,
-          "laban": 2
+          "luke": 4,
+          "moses": 4,
+          "noah": 3,
+          "solomon": 2
         }
       },
       {
         "text": "즉석에서 창의적으로 대응한다",
         "scores": {
-          "david": 3,
-          "peter": 2,
-          "rebekah": 2,
-          "joseph": 2
+          "david": 4,
+          "peter": 3,
+          "joseph": 3,
+          "rebekah": 3
         }
       }
     ]
@@ -343,36 +348,36 @@
         "text": "공동체의 확신과 동의를 구한다",
         "scores": {
           "paul": 3,
+          "esther": 4,
           "barnabas": 2,
-          "esther": 2,
           "deborah": 2
         }
       },
       {
         "text": "개인적인 기도와 말씀 확신을 통해",
         "scores": {
-          "jeremiah": 3,
-          "daniel": 3,
-          "mary": 2,
-          "david": 2
+          "jeremiah": 4,
+          "daniel": 4,
+          "mary": 3,
+          "david": 3
         }
       },
       {
         "text": "성경적 원리와 지혜를 통해 판단한다",
         "scores": {
-          "solomon": 3,
-          "luke": 2,
-          "paul": 2,
-          "moses": 2
+          "solomon": 4,
+          "moses": 5,
+          "luke": 4,
+          "joseph": 3
         }
       },
       {
         "text": "하나님의 때를 기다리며 인내한다",
         "scores": {
-          "noah": 3,
-          "moses": 2,
-          "mary": 2,
-          "esther": 2
+          "noah": 4,
+          "moses": 3,
+          "mary": 3,
+          "esther": 4
         }
       }
     ]
@@ -384,37 +389,38 @@
       {
         "text": "적극적으로 사람들에게 다가가 직접 전한다",
         "scores": {
-          "peter": 3,
-          "paul": 3,
-          "david": 2,
-          "barnabas": 1
+          "peter": 4,
+          "paul": 4,
+          "david": 3,
+          "barnabas": 2,
+          "jeremiah": 1
         }
       },
       {
         "text": "개인적 관계를 통해 자연스럽게 전한다",
         "scores": {
-          "barnabas": 3,
-          "luke": 2,
-          "mary": 2,
-          "esther": 2
+          "barnabas": 4,
+          "luke": 3,
+          "mary": 3,
+          "esther": 3
         }
       },
       {
-        "text": "체계적인 성경 공부와 가르침으로",
+        "text": "체계적인 가르침과 설명으로",
         "scores": {
           "paul": 3,
-          "luke": 3,
-          "solomon": 2,
-          "moses": 2
+          "luke": 4,
+          "moses": 4,
+          "solomon": 3
         }
       },
       {
         "text": "삶의 모범을 통해 조용히 증거한다",
         "scores": {
-          "mary": 3,
-          "daniel": 3,
-          "noah": 2,
-          "joseph": 2
+          "mary": 4,
+          "joseph": 5,
+          "daniel": 4,
+          "noah": 3
         }
       }
     ]
@@ -426,37 +432,37 @@
       {
         "text": "적극적으로 중재에 나서 해결을 도모한다",
         "scores": {
-          "paul": 3,
-          "deborah": 3,
-          "barnabas": 2,
-          "peter": 2
+          "moses": 4,
+          "paul": 4,
+          "deborah": 4,
+          "barnabas": 3
         }
       },
       {
         "text": "조용히 기도하며 하나님의 인도하심을 구한다",
         "scores": {
-          "jeremiah": 3,
-          "mary": 2,
-          "daniel": 2,
-          "david": 2
+          "jeremiah": 4,
+          "mary": 3,
+          "daniel": 3,
+          "david": 3
         }
       },
       {
         "text": "객관적으로 분석하여 공정한 해결책을 제시한다",
         "scores": {
-          "solomon": 3,
-          "luke": 2,
-          "moses": 2,
-          "deborah": 2
+          "solomon": 4,
+          "luke": 3,
+          "joseph": 5,
+          "deborah": 3
         }
       },
       {
         "text": "화해와 용서의 분위기를 조성한다",
         "scores": {
-          "barnabas": 3,
-          "david": 2,
-          "esther": 2,
-          "joseph": 2
+          "barnabas": 4,
+          "joseph": 4,
+          "david": 3,
+          "esther": 3
         }
       }
     ]
@@ -468,37 +474,37 @@
       {
         "text": "신뢰하는 사람들과 충분히 상의한다",
         "scores": {
-          "esther": 3,
-          "paul": 2,
-          "barnabas": 2,
+          "esther": 5,
+          "paul": 3,
+          "barnabas": 3,
           "solomon": 2
         }
       },
       {
         "text": "하나님께 기도하며 확신을 구한다",
         "scores": {
-          "daniel": 3,
-          "jeremiah": 3,
-          "mary": 2,
-          "david": 2
+          "daniel": 4,
+          "jeremiah": 4,
+          "mary": 3,
+          "david": 3
         }
       },
       {
         "text": "모든 정보를 수집하고 분석한 후 결정한다",
         "scores": {
-          "solomon": 3,
-          "luke": 3,
-          "noah": 2,
-          "moses": 2
+          "solomon": 4,
+          "luke": 4,
+          "joseph": 5,
+          "moses": 3
         }
       },
       {
         "text": "직감과 영감을 따라 과감하게 결정한다",
         "scores": {
-          "david": 3,
-          "peter": 2,
-          "rebekah": 2,
-          "deborah": 2
+          "david": 4,
+          "peter": 3,
+          "rebekah": 3,
+          "deborah": 3
         }
       }
     ]
@@ -510,79 +516,79 @@
       {
         "text": "함께 행동하며 직접적으로 문제를 해결한다",
         "scores": {
-          "peter": 3,
-          "deborah": 2,
-          "paul": 2,
-          "david": 2
+          "peter": 4,
+          "moses": 3,
+          "deborah": 3,
+          "paul": 3
         }
       },
       {
         "text": "조용히 뒤에서 필요한 것을 지원한다",
         "scores": {
-          "barnabas": 3,
-          "mary": 3,
-          "luke": 2,
-          "esther": 2
+          "barnabas": 4,
+          "luke": 4,
+          "mary": 4,
+          "esther": 3
         }
       },
       {
         "text": "체계적으로 계획을 세워 장기적으로 돕는다",
         "scores": {
-          "luke": 3,
-          "solomon": 2,
-          "noah": 2,
-          "moses": 2
+          "luke": 4,
+          "joseph": 5,
+          "solomon": 3,
+          "moses": 4
         }
       },
       {
         "text": "상황에 맞춰 유연하게 도움을 준다",
         "scores": {
+          "joseph": 4,
           "rebekah": 3,
-          "joseph": 2,
-          "david": 2,
-          "laban": 2
+          "david": 3,
+          "esther": 4
         }
       }
     ]
   },
   {
     "id": 14,
-    "text": "성경 공부를 인도할 때?",
+    "text": "말씀을 가르칠 때?",
     "options": [
       {
         "text": "참여자들과 활발히 토론하며 진행한다",
         "scores": {
-          "paul": 3,
-          "peter": 2,
-          "barnabas": 2,
-          "deborah": 2
+          "paul": 4,
+          "peter": 3,
+          "barnabas": 3,
+          "deborah": 3
         }
       },
       {
         "text": "차분하고 깊이 있게 말씀을 전한다",
         "scores": {
-          "jeremiah": 3,
-          "luke": 2,
-          "solomon": 2,
-          "daniel": 2
+          "jeremiah": 4,
+          "luke": 3,
+          "solomon": 3,
+          "daniel": 3
         }
       },
       {
         "text": "체계적으로 구조화하여 가르친다",
         "scores": {
-          "luke": 3,
+          "luke": 4,
+          "moses": 5,
           "paul": 3,
-          "solomon": 2,
-          "moses": 2
+          "solomon": 3
         }
       },
       {
         "text": "실생활 적용에 초점을 맞춰 진행한다",
         "scores": {
-          "moses": 3,
-          "noah": 2,
-          "esther": 2,
-          "barnabas": 2
+          "moses": 4,
+          "joseph": 4,
+          "noah": 3,
+          "esther": 3
         }
       }
     ]
@@ -594,37 +600,37 @@
       {
         "text": "계획을 세우고 체계적으로 실행한다",
         "scores": {
-          "luke": 3,
-          "noah": 3,
-          "moses": 2,
-          "solomon": 2
+          "luke": 4,
+          "moses": 4,
+          "joseph": 4,
+          "noah": 4
         }
       },
       {
         "text": "상황에 따라 유연하게 대응한다",
         "scores": {
-          "rebekah": 3,
-          "joseph": 2,
-          "david": 2,
-          "peter": 2
+          "joseph": 4,
+          "rebekah": 4,
+          "david": 3,
+          "peter": 3
         }
       },
       {
         "text": "다른 사람들과 협력하며 함께 진행한다",
         "scores": {
-          "paul": 3,
-          "barnabas": 2,
-          "deborah": 2,
-          "esther": 2
+          "paul": 4,
+          "barnabas": 3,
+          "moses": 3,
+          "deborah": 3
         }
       },
       {
         "text": "기도하며 하나님께 맡기고 순종한다",
         "scores": {
-          "mary": 3,
-          "daniel": 3,
-          "jeremiah": 2,
-          "noah": 2
+          "mary": 4,
+          "daniel": 4,
+          "jeremiah": 3,
+          "noah": 3
         }
       }
     ]
@@ -636,37 +642,38 @@
       {
         "text": "즉시 행동하며 적극적으로 대처한다",
         "scores": {
-          "peter": 3,
-          "david": 2,
-          "rebekah": 2,
-          "deborah": 2
+          "peter": 4,
+          "david": 3,
+          "rebekah": 3,
+          "deborah": 3,
+          "luke": 1
         }
       },
       {
         "text": "일단 멈추고 기도하며 하나님께 구한다",
         "scores": {
-          "daniel": 3,
-          "jeremiah": 2,
-          "mary": 2,
-          "david": 2
+          "daniel": 4,
+          "jeremiah": 3,
+          "mary": 3,
+          "david": 3
         }
       },
       {
         "text": "상황을 분석하고 최선의 방법을 찾는다",
         "scores": {
-          "solomon": 3,
-          "luke": 2,
-          "paul": 2,
-          "moses": 2
+          "solomon": 4,
+          "luke": 4,
+          "joseph": 5,
+          "moses": 3
         }
       },
       {
         "text": "경험과 지혜를 바탕으로 신중히 대응한다",
         "scores": {
-          "moses": 3,
-          "noah": 2,
-          "esther": 2,
-          "laban": 2
+          "moses": 4,
+          "joseph": 4,
+          "noah": 3,
+          "esther": 4
         }
       }
     ]
@@ -678,247 +685,163 @@
       {
         "text": "사람들을 모으고 팀을 구성한다",
         "scores": {
-          "paul": 3,
-          "deborah": 3,
-          "barnabas": 2,
-          "peter": 2
+          "moses": 4,
+          "paul": 4,
+          "deborah": 4,
+          "barnabas": 3
         }
       },
       {
         "text": "충분히 기도하고 준비한 후 시작한다",
         "scores": {
-          "jeremiah": 3,
-          "daniel": 2,
-          "mary": 2,
-          "moses": 2
+          "jeremiah": 4,
+          "daniel": 3,
+          "mary": 3,
+          "moses": 3
         }
       },
       {
         "text": "체계적인 계획과 준비를 통해 시작한다",
         "scores": {
-          "luke": 3,
-          "solomon": 3,
-          "noah": 2,
-          "moses": 2
+          "luke": 4,
+          "joseph": 5,
+          "solomon": 4,
+          "moses": 4
         }
       },
       {
         "text": "하나님의 때를 기다리며 순종한다",
         "scores": {
-          "mary": 3,
-          "noah": 2,
-          "esther": 2,
-          "daniel": 2
+          "mary": 4,
+          "esther": 4,
+          "noah": 3,
+          "daniel": 3
         }
       }
     ]
   },
   {
     "id": 18,
-    "text": "하루 일과를 보낼 때?",
+    "text": "골리앗과 같은 거대한 도전 앞에서 당신은?",
     "options": [
       {
-        "text": "사람들과 만나고 교제하는 시간을 중시한다",
+        "text": "하나님을 향한 믿음으로 과감히 맞선다",
         "scores": {
+          "david": 4,
+          "daniel": 4,
           "peter": 3,
-          "paul": 2,
-          "barnabas": 2,
-          "david": 2
+          "deborah": 3
         }
       },
       {
-        "text": "혼자만의 시간과 묵상을 소중히 한다",
+        "text": "기도하며 하나님의 도우심을 간구한다",
         "scores": {
-          "jeremiah": 3,
+          "jeremiah": 4,
           "mary": 3,
-          "daniel": 2,
-          "luke": 2
+          "esther": 4,
+          "daniel": 3
         }
       },
       {
-        "text": "계획된 일정에 따라 체계적으로 진행한다",
+        "text": "체계적으로 준비하고 전략을 세운다",
         "scores": {
-          "luke": 3,
-          "noah": 2,
-          "moses": 2,
-          "laban": 2
+          "solomon": 4,
+          "moses": 4,
+          "joseph": 5,
+          "luke": 3
         }
       },
       {
-        "text": "상황에 맞춰 유연하게 조정한다",
+        "text": "다른 사람들과 함께 연합하여 대응한다",
         "scores": {
-          "rebekah": 3,
-          "joseph": 2,
-          "david": 2,
-          "solomon": 2
+          "deborah": 4,
+          "moses": 4,
+          "esther": 5,
+          "paul": 3
         }
       }
     ]
   },
   {
     "id": 19,
-    "text": "골리앗과 같은 거대한 도전 앞에서 당신은?",
+    "text": "홍해 앞에서 이집트 군대가 뒤쫓아올 때 당신은?",
     "options": [
       {
-        "text": "하나님을 향한 믿음으로 과감히 맞선다",
+        "text": "하나님께서 길을 열어주실 것을 확신한다",
         "scores": {
-          "david": 3,
+          "moses": 5,
+          "noah": 3,
           "daniel": 3,
-          "peter": 2,
-          "deborah": 2
+          "mary": 3
         }
       },
       {
-        "text": "기도하며 하나님의 도우심을 간구한다",
+        "text": "백성들을 격려하며 하나님을 의지하자고 외친다",
         "scores": {
-          "jeremiah": 3,
-          "mary": 2,
-          "daniel": 2,
-          "esther": 2
+          "moses": 4,
+          "paul": 4,
+          "peter": 3,
+          "deborah": 3
         }
       },
       {
-        "text": "체계적으로 준비하고 전략을 세운다",
+        "text": "현실적인 대안을 찾아 신속히 행동한다",
         "scores": {
+          "joseph": 4,
+          "rebekah": 4,
           "solomon": 3,
-          "luke": 2,
-          "paul": 2,
-          "moses": 2
+          "luke": 2
         }
       },
       {
-        "text": "다른 사람들과 함께 연합하여 대응한다",
+        "text": "조용히 기도하며 하나님의 인도하심을 기다린다",
         "scores": {
-          "deborah": 3,
-          "paul": 2,
-          "barnabas": 2,
-          "esther": 2
+          "jeremiah": 4,
+          "mary": 4,
+          "luke": 3,
+          "esther": 3
         }
       }
     ]
   },
   {
     "id": 20,
-    "text": "홍해 앞에서 이집트 군대가 뒤쫓아올 때 당신은?",
-    "options": [
-      {
-        "text": "하나님께서 길을 열어주실 것을 확신한다",
-        "scores": {
-          "moses": 3,
-          "noah": 2,
-          "daniel": 2,
-          "mary": 2
-        }
-      },
-      {
-        "text": "백성들을 격려하며 하나님을 의지하자고 외친다",
-        "scores": {
-          "paul": 3,
-          "peter": 2,
-          "deborah": 2,
-          "david": 2
-        }
-      },
-      {
-        "text": "현실적인 대안을 찾아 신속히 행동한다",
-        "scores": {
-          "rebekah": 3,
-          "joseph": 2,
-          "solomon": 2,
-          "laban": 2
-        }
-      },
-      {
-        "text": "조용히 기도하며 하나님의 인도하심을 기다린다",
-        "scores": {
-          "jeremiah": 3,
-          "mary": 3,
-          "luke": 2,
-          "esther": 2
-        }
-      }
-    ]
-  },
-  {
-    "id": 21,
     "text": "바벨탑을 쌓자는 제안이 나왔을 때 당신은?",
     "options": [
       {
         "text": "하나님의 뜻이 아님을 분명히 반대한다",
         "scores": {
-          "jeremiah": 3,
-          "daniel": 3,
-          "moses": 2,
-          "noah": 2
+          "jeremiah": 4,
+          "moses": 4,
+          "daniel": 4,
+          "noah": 3
         }
       },
       {
         "text": "사람들을 설득하여 바른 길로 인도한다",
         "scores": {
-          "paul": 3,
-          "deborah": 2,
-          "barnabas": 2,
-          "peter": 2
+          "paul": 4,
+          "moses": 4,
+          "deborah": 3,
+          "barnabas": 3
         }
       },
       {
         "text": "하나님의 심판을 경고하며 회개를 촉구한다",
         "scores": {
-          "jeremiah": 3,
-          "peter": 2,
-          "paul": 2,
-          "moses": 2
+          "jeremiah": 5,
+          "peter": 3,
+          "moses": 3,
+          "paul": 3
         }
       },
       {
         "text": "조용히 떠나 하나님의 뜻을 따른다",
         "scores": {
-          "noah": 3,
-          "mary": 2,
-          "luke": 2,
-          "esther": 2
-        }
-      }
-    ]
-  },
-  {
-    "id": 22,
-    "text": "요나처럼 하나님의 부르심을 피하고 싶을 때 당신은?",
-    "options": [
-      {
-        "text": "결국 순종하며 하나님의 뜻을 따른다",
-        "scores": {
-          "noah": 3,
+          "noah": 4,
+          "luke": 3,
           "mary": 3,
-          "daniel": 2,
-          "moses": 2
-        }
-      },
-      {
-        "text": "기도하며 마음을 바꿔달라고 구한다",
-        "scores": {
-          "jeremiah": 3,
-          "mary": 2,
-          "david": 2,
           "esther": 2
-        }
-      },
-      {
-        "text": "다른 방법이 있는지 지혜를 구한다",
-        "scores": {
-          "solomon": 3,
-          "esther": 2,
-          "luke": 2,
-          "paul": 2
-        }
-      },
-      {
-        "text": "신뢰하는 사람들과 상의한다",
-        "scores": {
-          "esther": 3,
-          "barnabas": 2,
-          "paul": 2,
-          "solomon": 2
         }
       }
     ]

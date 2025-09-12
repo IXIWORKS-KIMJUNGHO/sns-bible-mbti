@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../widgets/circular_liquid_glass_widget.dart';
 
 /// Demo page showing circular liquid glass widget implementation
@@ -117,6 +118,33 @@ class CustomIntroPage extends StatelessWidget {
                 ),
                 
                 const SizedBox(height: 32),
+                
+                // 임시: 결과 화면 바로가기 버튼
+                Container(
+                  width: double.infinity,
+                  margin: const EdgeInsets.only(bottom: 16),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // 테스트용 데이터 설정
+                      context.go('/result');
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                    ),
+                    child: const Text(
+                      '🚀 결과 화면 바로가기 (테스트)',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                ),
                 
                 Row(
                   children: [

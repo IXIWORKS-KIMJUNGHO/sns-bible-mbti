@@ -4,8 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../models/biblical_character.dart';
 import '../../providers/character_selection_provider.dart';
+import '../../providers/user_name_provider.dart';
 import '../../widgets/character_carousel.dart';
 import '../../widgets/video_background.dart';
+import '../../widgets/home_button.dart';
 
 /// 성경인물 선택 화면
 /// 
@@ -68,6 +70,9 @@ class _CharacterSelectionScreenState extends ConsumerState<CharacterSelectionScr
   }
 
   void _onCharacterSelected(BiblicalCharacter character) {
+    // 선택된 캐릭터 저장
+    ref.read(selectedCharacterProvider.notifier).selectCharacter(character);
+    
     // 버튼 애니메이션 시작
     _buttonController.forward();
   }
@@ -77,21 +82,8 @@ class _CharacterSelectionScreenState extends ConsumerState<CharacterSelectionScr
   }
 
   void _onContinuePressed() {
-    // 다음 화면으로 이동 (추후 구현)
-    // context.go('/assessment');
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          '${ref.read(selectedCharacterProvider)?.name} 선택 완료!',
-          style: const TextStyle(
-            fontFamily: 'SpoqaHanSansNeo',
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        backgroundColor: Colors.green.withValues(alpha: 0.8),
-        duration: const Duration(seconds: 2),
-      ),
-    );
+    // 질문지 화면으로 이동
+    context.go('/questionnaire');
   }
 
   @override
@@ -100,6 +92,7 @@ class _CharacterSelectionScreenState extends ConsumerState<CharacterSelectionScr
     final isTabletLandscape = screenSize.width > 1500 && screenSize.aspectRatio > 1.2;
     final selectedCharacter = ref.watch(selectedCharacterProvider);
     final isCharacterSelected = ref.watch(isCharacterSelectedProvider);
+    final userName = ref.watch(userNameProvider);
     
     return Scaffold(
       body: VideoBackground(
@@ -154,9 +147,11 @@ class _CharacterSelectionScreenState extends ConsumerState<CharacterSelectionScr
                         
                         const Spacer(),
                         
-                        // Title
+                        // Title with user name
                         Text(
-                          '닮고 싶은 성경인물을 선택해주세요',
+                          userName.isNotEmpty 
+                              ? '$userName님, 닮고 싶은 성경인물을 선택해주세요'
+                              : '닮고 싶은 성경인물을 선택해주세요',
                           style: TextStyle(
                             fontFamily: 'SpoqaHanSansNeo',
                             fontSize: isTabletLandscape ? 28 : 24,
@@ -262,6 +257,9 @@ class _CharacterSelectionScreenState extends ConsumerState<CharacterSelectionScr
               ),
             ),
           ),
+            
+            // Home Button
+            const TopRightHomeButton(),
           ],
         ),
       ),
