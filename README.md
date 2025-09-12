@@ -1,4 +1,4 @@
-# 📖 성경 인물 MBTI - Biblical Character Matching App
+# 📖 REJOICE 성경 인물 MBTI - Biblical Character Matching App
 
 나와 닮은 성경 인물을 찾아보는 믿음의 여정
 
