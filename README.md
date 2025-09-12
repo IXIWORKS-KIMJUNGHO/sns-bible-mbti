@@ -58,64 +58,97 @@ QR 코드 스캔하여 말씀카드 다운로드
 
 ## 🎬 성경 인물 영상
 
-각 성경 인물의 특성을 보여주는 영상들이 포함되어 있습니다:
+각 성경 인물의 특성을 보여주는 애니메이션입니다:
 
 <details>
 <summary>📹 성경 인물 영상 갤러리 (클릭하여 펼치기)</summary>
 
 ### 구약 인물들
 
-#### 노아 (Noah)
-https://github.com/user-attachments/assets/noah-video
-
-#### 모세 (Moses)  
-https://github.com/user-attachments/assets/moses-video
-
-#### 다윗 (David)
-https://github.com/user-attachments/assets/david-video
-
-#### 솔로몬 (Solomon)
-https://github.com/user-attachments/assets/solomon-video
-
-#### 다니엘 (Daniel)
-https://github.com/user-attachments/assets/daniel-video
-
-#### 에스더 (Esther)
-https://github.com/user-attachments/assets/esther-video
-
-#### 드보라 (Deborah)
-https://github.com/user-attachments/assets/deborah-video
-
-#### 리브가 (Rebekah)
-https://github.com/user-attachments/assets/rebekah-video
-
-#### 요셉 (Joseph)
-https://github.com/user-attachments/assets/joseph-video
-
-#### 예레미야 (Jeremiah)
-https://github.com/user-attachments/assets/jeremiah-video
+<table>
+  <tr>
+    <td align="center">
+      <img src="assets/videos/bible_people_gif/Noah.gif" width="200" alt="노아"><br>
+      <b>노아 (Noah)</b>
+    </td>
+    <td align="center">
+      <img src="assets/videos/bible_people_gif/Moses.gif" width="200" alt="모세"><br>
+      <b>모세 (Moses)</b>
+    </td>
+    <td align="center">
+      <img src="assets/videos/bible_people_gif/David.gif" width="200" alt="다윗"><br>
+      <b>다윗 (David)</b>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="assets/videos/bible_people_gif/Solomon.gif" width="200" alt="솔로몬"><br>
+      <b>솔로몬 (Solomon)</b>
+    </td>
+    <td align="center">
+      <img src="assets/videos/bible_people_gif/Daniel.gif" width="200" alt="다니엘"><br>
+      <b>다니엘 (Daniel)</b>
+    </td>
+    <td align="center">
+      <img src="assets/videos/bible_people_gif/Esther.gif" width="200" alt="에스더"><br>
+      <b>에스더 (Esther)</b>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="assets/videos/bible_people_gif/Deborah.gif" width="200" alt="드보라"><br>
+      <b>드보라 (Deborah)</b>
+    </td>
+    <td align="center">
+      <img src="assets/videos/bible_people_gif/Rebekah.gif" width="200" alt="리브가"><br>
+      <b>리브가 (Rebekah)</b>
+    </td>
+    <td align="center">
+      <img src="assets/videos/bible_people_gif/Joseph.gif" width="200" alt="요셉"><br>
+      <b>요셉 (Joseph)</b>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="assets/videos/bible_people_gif/Jeremiah.gif" width="200" alt="예레미야"><br>
+      <b>예레미야 (Jeremiah)</b>
+    </td>
+    <td align="center" colspan="2"></td>
+  </tr>
+</table>
 
 ### 신약 인물들
 
-#### 마리아 (Mary)
-https://github.com/user-attachments/assets/mary-video
-
-#### 베드로 (Peter)
-https://github.com/user-attachments/assets/peter-video
-
-#### 바울 (Paul)
-https://github.com/user-attachments/assets/paul-video
-
-#### 바나바 (Barnabas)
-https://github.com/user-attachments/assets/barnabas-video
-
-#### 누가 (Luke)
-https://github.com/user-attachments/assets/luke-video
-
-#### 탕자 (ProdigalSon)
-https://github.com/user-attachments/assets/prodigalson-video
-
-> 💡 **Tip**: 위의 플레이스홀더는 실제 영상 업로드 후 자동으로 재생됩니다. GitHub Issues나 Pull Request에 영상을 드래그 앤 드롭하여 업로드한 후 생성된 URL로 교체하세요.
+<table>
+  <tr>
+    <td align="center">
+      <img src="assets/videos/bible_people_gif/Mary.gif" width="200" alt="마리아"><br>
+      <b>마리아 (Mary)</b>
+    </td>
+    <td align="center">
+      <img src="assets/videos/bible_people_gif/Peter.gif" width="200" alt="베드로"><br>
+      <b>베드로 (Peter)</b>
+    </td>
+    <td align="center">
+      <img src="assets/videos/bible_people_gif/Paul.gif" width="200" alt="바울"><br>
+      <b>바울 (Paul)</b>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="assets/videos/bible_people_gif/Barnabas.gif" width="200" alt="바나바"><br>
+      <b>바나바 (Barnabas)</b>
+    </td>
+    <td align="center">
+      <img src="assets/videos/bible_people_gif/Luke.gif" width="200" alt="누가"><br>
+      <b>누가 (Luke)</b>
+    </td>
+    <td align="center">
+      <img src="assets/videos/bible_people_gif/ProdigalSon.gif" width="200" alt="탕자"><br>
+      <b>탕자 (Prodigal Son)</b>
+    </td>
+  </tr>
+</table>
 
 </details>
 
