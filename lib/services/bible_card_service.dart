@@ -84,7 +84,7 @@ class BibleCardService {
       // 4. 텍스트 스타일 설정 - Pretendard Light 폰트 사용
       final textStyle = ui.TextStyle(
         color: Colors.white,
-        fontSize: 90, // 크기 조정 (템플릿에 맞게)
+        fontSize: 110, // 크기 조정 (템플릿에 맞게)
         fontFamily: 'Pretendard', // Pretendard 폰트 사용
         fontWeight: ui.FontWeight.w300, // Light weight
         shadows: [
@@ -113,7 +113,7 @@ class BibleCardService {
 
       // 5. 텍스트 위치 계산 및 그리기 - 템플릿의 중앙 위치에 맞춤
       final double textX = (image.width - paragraph.width) / 2;
-      final double textY = image.height * 0.41; // 중앙 위치 (템플릿의 "정호" 위치)
+      final double textY = image.height * 0.4; // 중앙 위치 (템플릿의 "정호" 위치)
 
       canvas.drawParagraph(paragraph, Offset(textX, textY));
 

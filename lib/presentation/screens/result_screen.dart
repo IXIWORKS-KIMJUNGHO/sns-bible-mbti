@@ -164,6 +164,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
                                 await ref.read(bibleCardStateProvider.notifier).generateCard(
                                   characterId: matchedCharacter.id,
                                   userName: userName,
+                                  characterName: matchedCharacter.name,
                                 );
                                 
                                 // 로딩 닫기
@@ -173,11 +174,11 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
                                 
                                 // 결과 확인
                                 final state = ref.read(bibleCardStateProvider);
-                                if (state.downloadUrl != null && context.mounted) {
-                                  // QR 모달 표시
+                                if (state.hostingUrl != null && context.mounted) {
+                                  // QR 모달 표시 (Firebase Hosting URL 사용)
                                   showBibleCardQRModal(
                                     context: context,
-                                    downloadUrl: state.downloadUrl!,
+                                    downloadUrl: state.hostingUrl!,
                                     characterName: matchedCharacter.name,
                                     userName: userName,
                                   );
@@ -310,10 +311,8 @@ class _CharacterCardState extends State<_CharacterCard>
   }
 
   void _initializeVideo() {
-    // 디버깅용 로그
-    print('Initializing video for character: ${widget.character.name} (id: ${widget.character.id})');
+    // Debug logging removed for production
     final videoPath = _getVideoPath(widget.character.id);
-    print('Video path: $videoPath');
     if (videoPath.isNotEmpty) {
       _videoController = VideoPlayerController.asset(videoPath)
         ..initialize().then((_) {

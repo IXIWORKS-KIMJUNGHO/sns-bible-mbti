@@ -10,22 +10,26 @@ final bibleCardServiceProvider = Provider<BibleCardService>((ref) {
 class BibleCardState {
   final bool isLoading;
   final String? downloadUrl;
+  final String? hostingUrl;  // Firebase Hosting URL 추가
   final String? error;
   
   const BibleCardState({
     this.isLoading = false,
     this.downloadUrl,
+    this.hostingUrl,
     this.error,
   });
   
   BibleCardState copyWith({
     bool? isLoading,
     String? downloadUrl,
+    String? hostingUrl,
     String? error,
   }) {
     return BibleCardState(
       isLoading: isLoading ?? this.isLoading,
       downloadUrl: downloadUrl ?? this.downloadUrl,
+      hostingUrl: hostingUrl ?? this.hostingUrl,
       error: error ?? this.error,
     );
   }
@@ -45,6 +49,7 @@ class BibleCardNotifier extends StateNotifier<BibleCardState> {
   Future<void> generateCard({
     required String characterId,
     required String userName,
+    required String characterName,
   }) async {
     state = state.copyWith(isLoading: true, error: null);
     
@@ -57,9 +62,20 @@ class BibleCardNotifier extends StateNotifier<BibleCardState> {
       );
       
       if (downloadUrl != null) {
+        // Firebase Hosting URL 생성 (쿼리 파라미터 포함)
+        final encodedUrl = Uri.encodeComponent(downloadUrl);
+        final encodedName = Uri.encodeComponent(userName);
+        final encodedCharacter = Uri.encodeComponent(characterName);
+        
+        final hostingUrl = 'https://sns-rejoice-alliin-project.web.app/bible-card.html'
+            '?url=$encodedUrl'
+            '&name=$encodedName'
+            '&character=$encodedCharacter';
+        
         state = state.copyWith(
           isLoading: false,
           downloadUrl: downloadUrl,
+          hostingUrl: hostingUrl,
         );
       } else {
         state = state.copyWith(
