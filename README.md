@@ -61,27 +61,61 @@ QR 코드 스캔하여 말씀카드 다운로드
 각 성경 인물의 특성을 보여주는 영상들이 포함되어 있습니다:
 
 <details>
-<summary>📹 성경 인물 영상 목록</summary>
+<summary>📹 성경 인물 영상 갤러리 (클릭하여 펼치기)</summary>
 
-- **구약 인물들**
-  - 노아 (Noah) - `assets/videos/bible_people/Noah.mp4`
-  - 모세 (Moses) - `assets/videos/bible_people/Moses.mp4`
-  - 다윗 (David) - `assets/videos/bible_people/David.mp4`
-  - 솔로몬 (Solomon) - `assets/videos/bible_people/Solomon.mp4`
-  - 다니엘 (Daniel) - `assets/videos/bible_people/Daniel.mp4`
-  - 에스더 (Esther) - `assets/videos/bible_people/Esther.mp4`
-  - 드보라 (Deborah) - `assets/videos/bible_people/Deborah.mp4`
-  - 리브가 (Rebekah) - `assets/videos/bible_people/Rebekah.mp4`
-  - 요셉 (Joseph) - `assets/videos/bible_people/Joseph.mp4`
-  - 예레미야 (Jeremiah) - `assets/videos/bible_people/Jeremiah.mp4`
+### 구약 인물들
 
-- **신약 인물들**
-  - 마리아 (Mary) - `assets/videos/bible_people/Mary.mp4`
-  - 베드로 (Peter) - `assets/videos/bible_people/Peter.mp4`
-  - 바울 (Paul) - `assets/videos/bible_people/Paul.mp4`
-  - 바나바 (Barnabas) - `assets/videos/bible_people/Barnabas.mp4`
-  - 누가 (Luke) - `assets/videos/bible_people/Luke.mp4`
-  - 탕자 (ProdigalSon) - `assets/videos/bible_people/ProdigalSon.mp4`
+#### 노아 (Noah)
+https://github.com/user-attachments/assets/noah-video
+
+#### 모세 (Moses)  
+https://github.com/user-attachments/assets/moses-video
+
+#### 다윗 (David)
+https://github.com/user-attachments/assets/david-video
+
+#### 솔로몬 (Solomon)
+https://github.com/user-attachments/assets/solomon-video
+
+#### 다니엘 (Daniel)
+https://github.com/user-attachments/assets/daniel-video
+
+#### 에스더 (Esther)
+https://github.com/user-attachments/assets/esther-video
+
+#### 드보라 (Deborah)
+https://github.com/user-attachments/assets/deborah-video
+
+#### 리브가 (Rebekah)
+https://github.com/user-attachments/assets/rebekah-video
+
+#### 요셉 (Joseph)
+https://github.com/user-attachments/assets/joseph-video
+
+#### 예레미야 (Jeremiah)
+https://github.com/user-attachments/assets/jeremiah-video
+
+### 신약 인물들
+
+#### 마리아 (Mary)
+https://github.com/user-attachments/assets/mary-video
+
+#### 베드로 (Peter)
+https://github.com/user-attachments/assets/peter-video
+
+#### 바울 (Paul)
+https://github.com/user-attachments/assets/paul-video
+
+#### 바나바 (Barnabas)
+https://github.com/user-attachments/assets/barnabas-video
+
+#### 누가 (Luke)
+https://github.com/user-attachments/assets/luke-video
+
+#### 탕자 (ProdigalSon)
+https://github.com/user-attachments/assets/prodigalson-video
+
+> 💡 **Tip**: 위의 플레이스홀더는 실제 영상 업로드 후 자동으로 재생됩니다. GitHub Issues나 Pull Request에 영상을 드래그 앤 드롭하여 업로드한 후 생성된 URL로 교체하세요.
 
 </details>
 
