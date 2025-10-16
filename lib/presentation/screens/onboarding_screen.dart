@@ -16,6 +16,17 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   final _nameController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+
+    // 화면이 열릴 때 이름 상태 초기화 (이전 사용자 이름 제거)
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(userNameProvider.notifier).state = '';
+      _nameController.clear();
+    });
+  }
+
+  @override
   void dispose() {
     _nameController.dispose();
     super.dispose();

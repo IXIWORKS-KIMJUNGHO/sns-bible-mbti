@@ -151,8 +151,11 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
                           // 액션 버튼
                           _ActionButtons(
                             onRestart: () {
+                              // 모든 상태 초기화 (이름 포함)
+                              ref.read(userNameProvider.notifier).state = '';
                               ref.read(questionnaireProvider.notifier).reset();
                               ref.read(selectedCharacterProvider.notifier).clearSelection();
+                              ref.read(bibleCardStateProvider.notifier).reset();
                               context.go('/');
                             },
                             onShareBibleVerse: () async {

@@ -44,3 +44,9 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 BiblicalMBTI.dmg
+
+# Claude Code documentation and deployment artifacts
+claudedocs/
+.last-deployment.txt
+release-notes.txt
+scripts/deploy-ios-firebase.sh
