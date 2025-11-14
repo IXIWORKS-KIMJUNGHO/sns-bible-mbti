@@ -35,6 +35,15 @@ jobs:
       - name: Build web
         run: flutter build web --release --base-href "/sns-bible-mbti/"
 
+      - name: Optimize web build (remove unused assets)
+        run: |
+          # 웹에서 사용하지 않는 비디오 파일 제거
+          rm -rf build/web/assets/assets/videos/bible_people/*.mp4 || true
+          rm -rf build/web/assets/assets/videos/loading.mp4 || true
+          rm -rf build/web/assets/assets/videos/intro_video.mp4 || true
+          echo "Optimized build size:"
+          du -sh build/web
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
