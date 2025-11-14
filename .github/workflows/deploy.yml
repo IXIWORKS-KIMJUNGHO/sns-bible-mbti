@@ -32,6 +32,13 @@ jobs:
           rm -rf build/web/assets/assets/videos/bible_people/*.mp4 || true
           rm -rf build/web/assets/assets/videos/loading.mp4 || true
           rm -rf build/web/assets/assets/videos/intro_video.mp4 || true
+
+          # 성경 카드 이미지 제거 (서버에서 생성하므로 웹 빌드에 불필요)
+          rm -rf build/web/assets/assets/images/bible_cards/*.png || true
+
+          # 로컬 폰트 파일 제거 (Google Fonts 사용)
+          rm -rf build/web/assets/assets/fonts/*.otf || true
+
           echo "Optimized build size:"
           du -sh build/web
 

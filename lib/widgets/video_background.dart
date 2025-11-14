@@ -75,7 +75,7 @@ class _VideoBackgroundState extends State<VideoBackground> {
         Positioned.fill(
           child: (kIsWeb || widget.isPortrait)
               ? Image.asset(
-                  'assets/images/vertical_bg.png',
+                  'assets/images/vertical_bg.webp',
                   fit: widget.fit,
                   errorBuilder: (context, error, stackTrace) {
                     return Container(
