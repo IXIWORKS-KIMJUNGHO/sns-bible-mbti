@@ -1,7 +1,8 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
-/// 루프 재생되는 비디오 배경 위젯 (세로형에서는 이미지 배경)
+/// 루프 재생되는 비디오 배경 위젯 (세로형과 웹에서는 이미지 배경)
 class VideoBackground extends StatefulWidget {
   final String videoPath;
   final Widget? child;
@@ -27,8 +28,8 @@ class _VideoBackgroundState extends State<VideoBackground> {
   @override
   void initState() {
     super.initState();
-    // 세로형이 아닐 때만 비디오 초기화
-    if (!widget.isPortrait) {
+    // 웹이 아니고 세로형이 아닐 때만 비디오 초기화
+    if (!kIsWeb && !widget.isPortrait) {
       _initializeVideo();
     }
   }
@@ -60,7 +61,7 @@ class _VideoBackgroundState extends State<VideoBackground> {
 
   @override
   void dispose() {
-    if (!widget.isPortrait) {
+    if (!kIsWeb && !widget.isPortrait) {
       _controller.dispose();
     }
     super.dispose();
@@ -70,12 +71,24 @@ class _VideoBackgroundState extends State<VideoBackground> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        // 배경 (세로형: 이미지, 가로형: 비디오)
+        // 배경 (웹 또는 세로형: 이미지, 나머지: 비디오)
         Positioned.fill(
-          child: widget.isPortrait
+          child: (kIsWeb || widget.isPortrait)
               ? Image.asset(
                   'assets/images/vertical_bg.png',
                   fit: widget.fit,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      color: Colors.black,
+                      child: const Center(
+                        child: Icon(
+                          Icons.image_not_supported,
+                          color: Colors.white,
+                          size: 48,
+                        ),
+                      ),
+                    );
+                  },
                 )
               : _isInitialized
                   ? FittedBox(

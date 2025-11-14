@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
@@ -25,7 +26,10 @@ class _LoadingVideoDialogState extends State<LoadingVideoDialog> {
   @override
   void initState() {
     super.initState();
-    _initializeVideo();
+    // 웹이 아닐 때만 비디오 초기화
+    if (!kIsWeb) {
+      _initializeVideo();
+    }
   }
 
   void _initializeVideo() {
@@ -46,7 +50,9 @@ class _LoadingVideoDialogState extends State<LoadingVideoDialog> {
 
   @override
   void dispose() {
-    _controller.dispose();
+    if (!kIsWeb) {
+      _controller.dispose();
+    }
     super.dispose();
   }
 
@@ -57,27 +63,16 @@ class _LoadingVideoDialogState extends State<LoadingVideoDialog> {
       child: Material(
         color: Colors.black,
         child: Center(
-          child: _isInitialized
+          child: kIsWeb
               ? Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // 비디오 플레이어
-                    Container(
-                      width: 360,
-                      height: 360,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: AspectRatio(
-                          aspectRatio: _controller.value.aspectRatio,
-                          child: VideoPlayer(_controller),
-                        ),
-                      ),
+                    // 웹에서는 기본 로딩 인디케이터
+                    const CircularProgressIndicator(
+                      color: Colors.white,
+                      strokeWidth: 3,
                     ),
                     const SizedBox(height: 40),
-                    // 로딩 텍스트
                     Text(
                       '말씀카드를 준비하고 있습니다...',
                       style: TextStyle(
@@ -89,7 +84,6 @@ class _LoadingVideoDialogState extends State<LoadingVideoDialog> {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    // 서브 텍스트
                     Text(
                       '잠시만 기다려주세요',
                       style: TextStyle(
@@ -100,25 +94,65 @@ class _LoadingVideoDialogState extends State<LoadingVideoDialog> {
                     ),
                   ],
                 )
-              : Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    // 기본 로딩 인디케이터 (비디오 로딩 중)
-                    const CircularProgressIndicator(
-                      color: Colors.white,
-                      strokeWidth: 2,
+              : _isInitialized
+                  ? Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        // 비디오 플레이어 (모바일)
+                        Container(
+                          width: 360,
+                          height: 360,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: AspectRatio(
+                              aspectRatio: _controller.value.aspectRatio,
+                              child: VideoPlayer(_controller),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 40),
+                        Text(
+                          '말씀카드를 준비하고 있습니다...',
+                          style: TextStyle(
+                            fontFamily: 'SpoqaHanSansNeo',
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white.withValues(alpha: 0.9),
+                            letterSpacing: 0.5,
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        Text(
+                          '잠시만 기다려주세요',
+                          style: TextStyle(
+                            fontFamily: 'SpoqaHanSansNeo',
+                            fontSize: 14,
+                            color: Colors.white.withValues(alpha: 0.6),
+                          ),
+                        ),
+                      ],
+                    )
+                  : Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const CircularProgressIndicator(
+                          color: Colors.white,
+                          strokeWidth: 2,
+                        ),
+                        const SizedBox(height: 24),
+                        Text(
+                          '준비 중...',
+                          style: TextStyle(
+                            fontFamily: 'SpoqaHanSansNeo',
+                            fontSize: 16,
+                            color: Colors.white.withValues(alpha: 0.8),
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 24),
-                    Text(
-                      '준비 중...',
-                      style: TextStyle(
-                        fontFamily: 'SpoqaHanSansNeo',
-                        fontSize: 16,
-                        color: Colors.white.withValues(alpha: 0.8),
-                      ),
-                    ),
-                  ],
-                ),
         ),
       ),
     );
