@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import '../models/biblical_character.dart';
@@ -43,25 +44,53 @@ class _CharacterCarouselCardState extends State<CharacterCarouselCard>
     final Map<String, String> videoMapping = {
       'david': 'David.mp4',
       'esther': 'Esther.mp4',
-      'moses': 'Moses.mp4', // 파일명 오타
+      'moses': 'Moses.mp4',
       'mary': 'Mary.mp4',
-      'joseph': 'Joseph.mp4', // 파일명 오타
+      'joseph': 'Joseph.mp4',
       'paul': 'Paul.mp4',
       'daniel': 'Daniel.mp4',
       'solomon': 'Solomon.mp4',
       'deborah': 'Deborah.mp4',
       'barnabas': 'Barnabas.mp4',
       'luke': 'Luke.mp4',
-      'jeremiah': 'Jeremiah.mp4', // 파일명 오타
+      'jeremiah': 'Jeremiah.mp4',
       'noah': 'Noah.mp4',
       'rebekah': 'Rebekah.mp4',
-      'prodigal_son': 'ProdigalSon.mp4', // 파일명 오타
+      'prodigal_son': 'ProdigalSon.mp4',
       'peter': 'Peter.mp4',
     };
 
     final fileName = videoMapping[characterId];
     if (fileName != null) {
       return 'assets/videos/bible_people/$fileName';
+    }
+    return '';
+  }
+
+  // GIF 파일 매핑 (웹용)
+  String _getGifPath(String characterId) {
+    final Map<String, String> gifMapping = {
+      'david': 'David.gif',
+      'esther': 'Esther.gif',
+      'moses': 'Moses.gif',
+      'mary': 'Mary.gif',
+      'joseph': 'Joseph.gif',
+      'paul': 'Paul.gif',
+      'daniel': 'Daniel.gif',
+      'solomon': 'Solomon.gif',
+      'deborah': 'Deborah.gif',
+      'barnabas': 'Barnabas.gif',
+      'luke': 'Luke.gif',
+      'jeremiah': 'Jeremiah.gif',
+      'noah': 'Noah.gif',
+      'rebekah': 'Rebekah.gif',
+      'prodigal_son': 'ProdigalSon.gif',
+      'peter': 'Peter.gif',
+    };
+
+    final fileName = gifMapping[characterId];
+    if (fileName != null) {
+      return 'assets/videos/bible_people_gif/$fileName';
     }
     return '';
   }
@@ -80,8 +109,10 @@ class _CharacterCarouselCardState extends State<CharacterCarouselCard>
       end: 1.05,
     ).animate(CurvedAnimation(parent: _scaleController, curve: Curves.easeOut));
 
-    // 비디오 컨트롤러 초기화
-    _initializeVideo();
+    // 웹이 아닐 때만 비디오 컨트롤러 초기화
+    if (!kIsWeb) {
+      _initializeVideo();
+    }
   }
 
   void _initializeVideo() {
@@ -118,16 +149,18 @@ class _CharacterCarouselCardState extends State<CharacterCarouselCard>
   @override
   void didUpdateWidget(CharacterCarouselCard oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.character.id != widget.character.id) {
-      // 캐릭터가 변경되면 비디오 재초기화
-      _videoController?.dispose();
-      _initializeVideo();
-    } else if (oldWidget.isCenter != widget.isCenter) {
-      // 중앙 위치가 변경되면 재생/정지 상태 업데이트
-      if (widget.isCenter) {
-        _videoController?.play();
-      } else {
-        _videoController?.pause();
+    if (!kIsWeb) {
+      if (oldWidget.character.id != widget.character.id) {
+        // 캐릭터가 변경되면 비디오 재초기화
+        _videoController?.dispose();
+        _initializeVideo();
+      } else if (oldWidget.isCenter != widget.isCenter) {
+        // 중앙 위치가 변경되면 재생/정지 상태 업데이트
+        if (widget.isCenter) {
+          _videoController?.play();
+        } else {
+          _videoController?.pause();
+        }
       }
     }
   }
@@ -142,6 +175,31 @@ class _CharacterCarouselCardState extends State<CharacterCarouselCard>
     } else {
       _scaleController.reverse();
     }
+  }
+
+  Widget _buildWebCharacterImage() {
+    final gifPath = _getGifPath(widget.character.id);
+    final isPortrait = ResponsiveLayout.isPortrait(widget.deviceType);
+
+    if (gifPath.isEmpty) {
+      return Icon(
+        Icons.person_outline,
+        size: isPortrait ? 84 : 80,
+        color: Colors.white.withValues(alpha: 0.8),
+      );
+    }
+
+    return Image.asset(
+      gifPath,
+      fit: BoxFit.cover,
+      errorBuilder: (context, error, stackTrace) {
+        return Icon(
+          Icons.person_outline,
+          size: isPortrait ? 84 : 80,
+          color: Colors.white.withValues(alpha: 0.8),
+        );
+      },
+    );
   }
 
   @override
@@ -223,7 +281,7 @@ class _CharacterCarouselCardState extends State<CharacterCarouselCard>
                                   ),
                                 ),
 
-                              // 캐릭터 비디오 또는 이미지 플레이스홀더
+                              // 캐릭터 비디오/GIF 또는 이미지 플레이스홀더
                               Container(
                                 width: isPortrait ? 168 : 160,
                                 height: isPortrait ? 168 : 160,
@@ -239,20 +297,21 @@ class _CharacterCarouselCardState extends State<CharacterCarouselCard>
                                   ),
                                 ),
                                 child: ClipOval(
-                                  child:
-                                      _videoController != null &&
-                                          _videoController!.value.isInitialized
-                                      ? AspectRatio(
-                                          aspectRatio: 1.0,
-                                          child: VideoPlayer(_videoController!),
-                                        )
-                                      : Icon(
-                                          Icons.person_outline,
-                                          size: isPortrait ? 84 : 80,
-                                          color: Colors.white.withValues(
-                                            alpha: 0.8,
-                                          ),
-                                        ),
+                                  child: kIsWeb
+                                      ? _buildWebCharacterImage()
+                                      : (_videoController != null &&
+                                              _videoController!.value.isInitialized
+                                          ? AspectRatio(
+                                              aspectRatio: 1.0,
+                                              child: VideoPlayer(_videoController!),
+                                            )
+                                          : Icon(
+                                              Icons.person_outline,
+                                              size: isPortrait ? 84 : 80,
+                                              color: Colors.white.withValues(
+                                                alpha: 0.8,
+                                              ),
+                                            )),
                                 ),
                               ),
 

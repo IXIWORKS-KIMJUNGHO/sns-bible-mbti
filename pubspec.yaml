@@ -105,6 +105,7 @@ flutter:
     - assets/fonts/
     - assets/videos/
     - assets/videos/bible_people/
+    - assets/videos/bible_people_gif/
     - assets/videos/loading.mp4
 
   # An image asset can refer to one or more resolution-specific "variants", see
