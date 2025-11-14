@@ -18,31 +18,35 @@ import '../../providers/bible_card_provider.dart';
 import '../../models/biblical_character.dart';
 import '../../theme/app_typography.dart';
 import '../../theme/app_colors.dart';
+import '../../utils/responsive_layout.dart';
 
 class ResultScreen extends ConsumerStatefulWidget {
   const ResultScreen({super.key});
-  
+
   @override
   ConsumerState<ResultScreen> createState() => _ResultScreenState();
 }
 
 class _ResultScreenState extends ConsumerState<ResultScreen> {
   final ScrollController _scrollController = ScrollController();
-  
+
   @override
   void dispose() {
     _scrollController.dispose();
     super.dispose();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     final userName = ref.watch(userNameProvider);
     final selectedCharacter = ref.watch(selectedCharacterProvider);
     final top3 = ref.read(questionnaireProvider.notifier).getTop3Characters();
-    final screenSize = MediaQuery.of(context).size;
-    final isTabletLandscape = screenSize.width > 1500 && screenSize.aspectRatio > 1.2;
-    
+    final deviceType = ResponsiveLayout.getDeviceType(context);
+    final fontScale = ResponsiveLayout.getFontScale(deviceType);
+    final isPortrait = ResponsiveLayout.isPortrait(deviceType);
+    final portraitFontBoost = isPortrait ? 1.2 : 1.0;
+    final isTabletLandscape = deviceType == DeviceType.tabletLandscape;
+
     // 매칭된 캐릭터 찾기 (상위 1위)
     BiblicalCharacter? matchedCharacter;
     if (top3.isNotEmpty) {
@@ -55,10 +59,11 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
       // 기본값으로 첫 번째 캐릭터 사용
       matchedCharacter = BiblicalCharacters.characters.first;
     }
-    
+
     return Scaffold(
       body: VideoBackground(
         videoPath: 'assets/videos/intro_video.mp4',
+        isPortrait: isPortrait,
         child: Stack(
           children: [
             SafeArea(
@@ -67,43 +72,55 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
                   // 상단 고정 영역: 헤더와 비교 카드
                   Padding(
                     padding: EdgeInsets.fromLTRB(
-                      isTabletLandscape ? 40 : 20,
-                      isTabletLandscape ? 20 : 10,
-                      isTabletLandscape ? 40 : 20,
+                      isPortrait ? 16 : (isTabletLandscape ? 40 : 20),
+                      isPortrait ? 35 : (isTabletLandscape ? 0 : 0),
+                      isPortrait ? 16 : (isTabletLandscape ? 40 : 20),
                       0,
                     ),
                     child: Column(
                       children: [
                         // 개인화된 헤더
                         Text(
-                          selectedCharacter != null 
+                          selectedCharacter != null
                               ? '${selectedCharacter.name}을 닮고 싶은 $userName님'
                               : '$userName님',
                           style: AppTypography.withGlassEffect(
                             AppTypography.getResponsive(
                               AppTypography.h1,
                               isTabletLandscape,
+                            ).copyWith(
+                              fontSize: isPortrait
+                                  ? 17 * fontScale * portraitFontBoost
+                                  : null,
                             ),
                           ),
                           textAlign: TextAlign.center,
                         ),
-                        
-                        SizedBox(height: isTabletLandscape ? 30 : 20),
-                        
+
+                        SizedBox(
+                          height: isPortrait
+                              ? 16
+                              : (isTabletLandscape ? 30 : 20),
+                        ),
+
                         // 비교 카드들 (고정 높이)
-                        if (selectedCharacter != null && matchedCharacter != null)
+                        if (selectedCharacter != null &&
+                            matchedCharacter != null)
                           SizedBox(
-                            height: isTabletLandscape ? 350 : 280,
+                            height: isPortrait
+                                ? 240
+                                : (isTabletLandscape ? 350 : 280),
                             child: _ComparisonSection(
                               selectedCharacter: selectedCharacter,
                               matchedCharacter: matchedCharacter,
                               isTabletLandscape: isTabletLandscape,
+                              isPortrait: isPortrait,
                             ),
                           ),
                       ],
                     ),
                   ),
-                  
+
                   // 스크롤 가능한 콘텐츠 영역
                   Expanded(
                     child: SingleChildScrollView(
@@ -113,10 +130,10 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
                       ),
                       primary: false,
                       padding: EdgeInsets.fromLTRB(
-                        isTabletLandscape ? 40 : 20,
-                        isTabletLandscape ? 20 : 10,
-                        isTabletLandscape ? 40 : 20,
-                        isTabletLandscape ? 40 : 20,
+                        isPortrait ? 16 : (isTabletLandscape ? 40 : 20),
+                        isPortrait ? 10 : (isTabletLandscape ? 20 : 10),
+                        isPortrait ? 16 : (isTabletLandscape ? 40 : 20),
+                        isPortrait ? 20 : (isTabletLandscape ? 40 : 20),
                       ),
                       child: Column(
                         children: [
@@ -125,36 +142,52 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
                             _DetailedResultMessage(
                               matchedCharacter: matchedCharacter,
                               isTabletLandscape: isTabletLandscape,
+                              isPortrait: isPortrait,
                             ),
-                          
-                          SizedBox(height: isTabletLandscape ? 30 : 20),
-                          
+
+                          SizedBox(
+                            height: isPortrait
+                                ? 16
+                                : (isTabletLandscape ? 30 : 20),
+                          ),
+
                           // 개선된 성격 특성 비교 섹션
-                          if (selectedCharacter != null && matchedCharacter != null)
+                          if (selectedCharacter != null &&
+                              matchedCharacter != null)
                             ImprovedTraitComparison(
                               selectedCharacter: selectedCharacter,
                               matchedCharacter: matchedCharacter,
                               isTabletLandscape: isTabletLandscape,
                             ),
-                          
-                          SizedBox(height: isTabletLandscape ? 30 : 20),
-                          
+
+                          SizedBox(
+                            height: isPortrait
+                                ? 16
+                                : (isTabletLandscape ? 30 : 20),
+                          ),
+
                           // 개선된 강점과 성장 영역 섹션
                           if (matchedCharacter != null)
                             StrengthsGrowthCards(
                               matchedCharacter: matchedCharacter,
                               isTabletLandscape: isTabletLandscape,
                             ),
-                          
-                          SizedBox(height: isTabletLandscape ? 30 : 20),
-                          
+
+                          SizedBox(
+                            height: isPortrait
+                                ? 16
+                                : (isTabletLandscape ? 30 : 20),
+                          ),
+
                           // 액션 버튼
                           _ActionButtons(
                             onRestart: () {
                               // 모든 상태 초기화 (이름 포함)
                               ref.read(userNameProvider.notifier).state = '';
                               ref.read(questionnaireProvider.notifier).reset();
-                              ref.read(selectedCharacterProvider.notifier).clearSelection();
+                              ref
+                                  .read(selectedCharacterProvider.notifier)
+                                  .clearSelection();
                               ref.read(bibleCardStateProvider.notifier).reset();
                               context.go('/');
                             },
@@ -162,22 +195,25 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
                               if (matchedCharacter != null) {
                                 // 로딩 비디오 표시
                                 LoadingVideoDialog.show(context);
-                                
+
                                 // 말씀카드 생성
-                                await ref.read(bibleCardStateProvider.notifier).generateCard(
-                                  characterId: matchedCharacter.id,
-                                  userName: userName,
-                                  characterName: matchedCharacter.name,
-                                );
-                                
+                                await ref
+                                    .read(bibleCardStateProvider.notifier)
+                                    .generateCard(
+                                      characterId: matchedCharacter.id,
+                                      userName: userName,
+                                      characterName: matchedCharacter.name,
+                                    );
+
                                 // 로딩 닫기
                                 if (context.mounted) {
                                   Navigator.of(context).pop();
                                 }
-                                
+
                                 // 결과 확인
                                 final state = ref.read(bibleCardStateProvider);
-                                if (state.hostingUrl != null && context.mounted) {
+                                if (state.hostingUrl != null &&
+                                    context.mounted) {
                                   // QR 모달 표시 (Firebase Hosting URL 사용)
                                   showBibleCardQRModal(
                                     context: context,
@@ -185,11 +221,14 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
                                     characterName: matchedCharacter.name,
                                     userName: userName,
                                   );
-                                } else if (state.error != null && context.mounted) {
+                                } else if (state.error != null &&
+                                    context.mounted) {
                                   // 에러 메시지 표시
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
-                                      content: Text(state.error ?? '오류가 발생했습니다'),
+                                      content: Text(
+                                        state.error ?? '오류가 발생했습니다',
+                                      ),
                                       backgroundColor: Colors.red,
                                     ),
                                   );
@@ -197,6 +236,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
                               }
                             },
                             isTabletLandscape: isTabletLandscape,
+                            isPortrait: isPortrait,
                           ),
                         ],
                       ),
@@ -205,19 +245,17 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
                 ],
               ),
             ),
-            
+
             // Home Button
             const TopRightHomeButton(),
-            
+
             // 스크롤 힌트 (iPad용)
             Positioned(
               bottom: 30,
               left: 0,
               right: 0,
               child: Center(
-                child: GestureScrollHint(
-                  scrollController: _scrollController,
-                ),
+                child: GestureScrollHint(scrollController: _scrollController),
               ),
             ),
           ],
@@ -227,21 +265,39 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
   }
 }
 
-
 // 비교 섹션 위젯
 class _ComparisonSection extends StatelessWidget {
   final BiblicalCharacter selectedCharacter;
   final BiblicalCharacter matchedCharacter;
   final bool isTabletLandscape;
+  final bool isPortrait;
 
   const _ComparisonSection({
     required this.selectedCharacter,
     required this.matchedCharacter,
     required this.isTabletLandscape,
+    required this.isPortrait,
   });
 
   @override
   Widget build(BuildContext context) {
+    // 세로형에서는 매칭 결과만, 가로형에서는 가로 배치
+    if (isPortrait) {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          // 매칭 결과 캐릭터만 표시
+          _CharacterCard(
+            character: matchedCharacter,
+            title: "매칭결과",
+            isTabletLandscape: isTabletLandscape,
+            isPortrait: isPortrait,
+          ),
+        ],
+      );
+    }
+
+    // 가로형 레이아웃
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -251,20 +307,25 @@ class _ComparisonSection extends StatelessWidget {
           character: selectedCharacter,
           title: "닮고 싶은 ${selectedCharacter.name}",
           isTabletLandscape: isTabletLandscape,
+          isPortrait: isPortrait,
         ),
-        
+
         SizedBox(width: isTabletLandscape ? 60 : 20),
-        
+
         // VS 인디케이터
-        _VSIndicator(isTabletLandscape: isTabletLandscape),
-        
+        _VSIndicator(
+          isTabletLandscape: isTabletLandscape,
+          isPortrait: isPortrait,
+        ),
+
         SizedBox(width: isTabletLandscape ? 60 : 20),
-        
+
         // 오른쪽: 매칭 결과 캐릭터 (원형)
         _CharacterCard(
           character: matchedCharacter,
           title: "매칭결과 ${matchedCharacter.name}",
           isTabletLandscape: isTabletLandscape,
+          isPortrait: isPortrait,
         ),
       ],
     );
@@ -276,11 +337,13 @@ class _CharacterCard extends StatefulWidget {
   final BiblicalCharacter character;
   final String title;
   final bool isTabletLandscape;
+  final bool isPortrait;
 
   const _CharacterCard({
     required this.character,
     required this.title,
     required this.isTabletLandscape,
+    required this.isPortrait,
   });
 
   @override
@@ -296,19 +359,16 @@ class _CharacterCardState extends State<_CharacterCard>
   @override
   void initState() {
     super.initState();
-    
+
     _scaleController = AnimationController(
       duration: const Duration(milliseconds: 200),
       vsync: this,
     );
-    
+
     _scaleAnimation = Tween<double>(
       begin: 1.0,
       end: 1.02,
-    ).animate(CurvedAnimation(
-      parent: _scaleController,
-      curve: Curves.easeOut,
-    ));
+    ).animate(CurvedAnimation(parent: _scaleController, curve: Curves.easeOut));
 
     _initializeVideo();
   }
@@ -318,16 +378,18 @@ class _CharacterCardState extends State<_CharacterCard>
     final videoPath = _getVideoPath(widget.character.id);
     if (videoPath.isNotEmpty) {
       _videoController = VideoPlayerController.asset(videoPath)
-        ..initialize().then((_) {
-          if (mounted) {
-            setState(() {});
-            _videoController?.setLooping(true);
-            _videoController?.setVolume(0);
-            _videoController?.play();
-          }
-        }).catchError((error) {
-          // 에러 처리
-        });
+        ..initialize()
+            .then((_) {
+              if (mounted) {
+                setState(() {});
+                _videoController?.setLooping(true);
+                _videoController?.setVolume(0);
+                _videoController?.play();
+              }
+            })
+            .catchError((error) {
+              // 에러 처리
+            });
     }
   }
 
@@ -375,6 +437,11 @@ class _CharacterCardState extends State<_CharacterCard>
 
   @override
   Widget build(BuildContext context) {
+    // 세로형: 190px, 가로형: 기존 크기
+    final cardSize = widget.isPortrait
+        ? 190.0
+        : (widget.isTabletLandscape ? 280.0 : 220.0);
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -383,7 +450,9 @@ class _CharacterCardState extends State<_CharacterCard>
           widget.title,
           style: TextStyle(
             fontFamily: 'SpoqaHanSansNeo',
-            fontSize: widget.isTabletLandscape ? 18 : 16,
+            fontSize: widget.isPortrait
+                ? 15
+                : (widget.isTabletLandscape ? 13 : 12),
             fontWeight: FontWeight.w600,
             color: Colors.white,
             shadows: const [
@@ -395,9 +464,11 @@ class _CharacterCardState extends State<_CharacterCard>
             ],
           ),
         ),
-        
-        SizedBox(height: widget.isTabletLandscape ? 20 : 16),
-        
+
+        SizedBox(
+          height: widget.isPortrait ? 12 : (widget.isTabletLandscape ? 20 : 16),
+        ),
+
         // 원형 비디오 플레이어
         AnimatedBuilder(
           animation: _scaleAnimation,
@@ -408,8 +479,8 @@ class _CharacterCardState extends State<_CharacterCard>
                 onEnter: (_) => _handleHover(true),
                 onExit: (_) => _handleHover(false),
                 child: Container(
-                  width: widget.isTabletLandscape ? 280 : 220,
-                  height: widget.isTabletLandscape ? 280 : 220,
+                  width: cardSize,
+                  height: cardSize,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.white.withValues(alpha: 0.1),
@@ -428,7 +499,9 @@ class _CharacterCardState extends State<_CharacterCard>
                   child: ClipOval(
                     child: BackdropFilter(
                       filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                      child: _videoController != null && _videoController!.value.isInitialized
+                      child:
+                          _videoController != null &&
+                              _videoController!.value.isInitialized
                           ? FittedBox(
                               fit: BoxFit.cover,
                               child: SizedBox(
@@ -439,7 +512,9 @@ class _CharacterCardState extends State<_CharacterCard>
                             )
                           : Icon(
                               Icons.person_outline,
-                              size: widget.isTabletLandscape ? 120 : 100,
+                              size: widget.isPortrait
+                                  ? 80
+                                  : (widget.isTabletLandscape ? 120 : 100),
                               color: Colors.white.withValues(alpha: 0.6),
                             ),
                     ),
@@ -457,14 +532,20 @@ class _CharacterCardState extends State<_CharacterCard>
 // VS 인디케이터 위젯
 class _VSIndicator extends StatelessWidget {
   final bool isTabletLandscape;
+  final bool isPortrait;
 
-  const _VSIndicator({required this.isTabletLandscape});
+  const _VSIndicator({
+    required this.isTabletLandscape,
+    required this.isPortrait,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final indicatorSize = isPortrait ? 50.0 : (isTabletLandscape ? 80.0 : 60.0);
+
     return Container(
-      width: isTabletLandscape ? 80 : 60,
-      height: isTabletLandscape ? 80 : 60,
+      width: indicatorSize,
+      height: indicatorSize,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: Colors.white.withValues(alpha: 0.2),
@@ -481,7 +562,7 @@ class _VSIndicator extends StatelessWidget {
               'VS',
               style: TextStyle(
                 fontFamily: 'SpoqaHanSansNeo',
-                fontSize: isTabletLandscape ? 20 : 16,
+                fontSize: isPortrait ? 14 : (isTabletLandscape ? 20 : 16),
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
@@ -497,21 +578,25 @@ class _VSIndicator extends StatelessWidget {
 class _DetailedResultMessage extends StatelessWidget {
   final BiblicalCharacter matchedCharacter;
   final bool isTabletLandscape;
+  final bool isPortrait;
 
   const _DetailedResultMessage({
     required this.matchedCharacter,
     required this.isTabletLandscape,
+    required this.isPortrait,
   });
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     return GlassCard(
-      width: isTabletLandscape ? screenWidth * 0.7 : screenWidth * 0.9,
-      padding: EdgeInsets.all(isTabletLandscape ? 32 : 24),
+      width: isPortrait
+          ? screenWidth * 0.9
+          : (isTabletLandscape ? screenWidth * 0.7 : screenWidth * 0.9),
+      padding: EdgeInsets.all(isPortrait ? 18 : (isTabletLandscape ? 32 : 24)),
       backgroundColor: AppColors.glassMedium,
       borderColor: AppColors.borderMedium,
-      borderWidth: 2,
+      borderWidth: 1,
       child: Column(
         children: [
           Text(
@@ -521,9 +606,7 @@ class _DetailedResultMessage extends StatelessWidget {
                 AppTypography.body,
                 isTabletLandscape,
               ),
-            ).copyWith(
-              color: AppColors.textSecondary,
-            ),
+            ).copyWith(color: AppColors.textSecondary),
           ),
           const SizedBox(height: 12),
           Text(
@@ -535,16 +618,13 @@ class _DetailedResultMessage extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 10),
           Container(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               color: AppColors.glassLight,
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(
-                color: AppColors.borderLight,
-                width: 1,
-              ),
+              border: Border.all(color: AppColors.borderLight, width: 1),
             ),
             child: Text(
               matchedCharacter.description,
@@ -559,7 +639,7 @@ class _DetailedResultMessage extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           Container(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
@@ -570,19 +650,16 @@ class _DetailedResultMessage extends StatelessWidget {
                 ],
               ),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(
-                color: AppColors.borderLight,
-                width: 1,
-              ),
+              border: Border.all(color: AppColors.borderLight, width: 1),
             ),
             child: Column(
               children: [
                 Icon(
                   Icons.format_quote,
                   color: AppColors.textTertiary,
-                  size: 24,
+                  size: 15,
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 5),
                 Text(
                   matchedCharacter.bibleVerse,
                   style: AppTypography.withGlassEffect(
@@ -590,20 +667,15 @@ class _DetailedResultMessage extends StatelessWidget {
                       AppTypography.body,
                       isTabletLandscape,
                     ),
-                  ).copyWith(
-                    fontStyle: FontStyle.italic,
-                    height: 1.6,
-                  ),
+                  ).copyWith(fontStyle: FontStyle.italic, height: 1.3),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: 10),
                 Text(
                   matchedCharacter.verseReference,
                   style: AppTypography.withGlassEffect(
                     AppTypography.caption,
-                  ).copyWith(
-                    color: AppColors.textTertiary,
-                  ),
+                  ).copyWith(color: AppColors.textTertiary),
                 ),
               ],
             ),
@@ -614,21 +686,52 @@ class _DetailedResultMessage extends StatelessWidget {
   }
 }
 
-
 // 액션 버튼들 위젯
 class _ActionButtons extends StatelessWidget {
   final VoidCallback onRestart;
   final VoidCallback onShareBibleVerse;
   final bool isTabletLandscape;
+  final bool isPortrait;
 
   const _ActionButtons({
     required this.onRestart,
     required this.onShareBibleVerse,
     required this.isTabletLandscape,
+    required this.isPortrait,
   });
 
   @override
   Widget build(BuildContext context) {
+    // 세로형에서는 세로 스택, 가로형에서는 가로 배치
+    if (isPortrait) {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // 다시 시작하기 버튼
+          _buildButton(
+            onTap: onRestart,
+            text: '다시 시작하기',
+            icon: Icons.refresh,
+            isTabletLandscape: isTabletLandscape,
+            isPortrait: isPortrait,
+          ),
+
+          SizedBox(height: 12),
+
+          // 말씀카드 받기 버튼
+          _buildButton(
+            onTap: onShareBibleVerse,
+            text: '말씀카드 받기',
+            icon: Icons.qr_code_2,
+            isTabletLandscape: isTabletLandscape,
+            isPortrait: isPortrait,
+          ),
+        ],
+      );
+    }
+
+    // 가로형 레이아웃
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -638,34 +741,37 @@ class _ActionButtons extends StatelessWidget {
           text: '다시 시작하기',
           icon: Icons.refresh,
           isTabletLandscape: isTabletLandscape,
+          isPortrait: isPortrait,
         ),
-        
+
         SizedBox(width: isTabletLandscape ? 20 : 16),
-        
+
         // 말씀카드 받기 버튼
         _buildButton(
           onTap: onShareBibleVerse,
           text: '말씀카드 받기',
           icon: Icons.qr_code_2,
           isTabletLandscape: isTabletLandscape,
+          isPortrait: isPortrait,
         ),
       ],
     );
   }
-  
+
   Widget _buildButton({
     required VoidCallback onTap,
     required String text,
     required IconData icon,
     required bool isTabletLandscape,
+    required bool isPortrait,
   }) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white.withValues(alpha: 0.25),
-        borderRadius: BorderRadius.circular(28),
+        borderRadius: BorderRadius.circular(15),
         border: Border.all(
           color: Colors.white.withValues(alpha: 0.4),
-          width: 2,
+          width: 1,
         ),
         boxShadow: [
           BoxShadow(
@@ -676,33 +782,38 @@ class _ActionButtons extends StatelessWidget {
         ],
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(28),
+        borderRadius: BorderRadius.circular(15),
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
           child: Material(
             color: Colors.transparent,
             child: InkWell(
               onTap: onTap,
-              borderRadius: BorderRadius.circular(28),
+              borderRadius: BorderRadius.circular(15),
               child: Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: isTabletLandscape ? 32 : 24,
-                  vertical: isTabletLandscape ? 20 : 16,
+                  horizontal: isPortrait ? 20 : (isTabletLandscape ? 32 : 24),
+                  vertical: isPortrait ? 14 : (isTabletLandscape ? 20 : 16),
                 ),
                 child: Row(
-                  mainAxisSize: MainAxisSize.min,
+                  mainAxisSize: isPortrait
+                      ? MainAxisSize.max
+                      : MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
                       icon,
                       color: Colors.white,
-                      size: isTabletLandscape ? 24 : 20,
+                      size: isPortrait ? 18 : (isTabletLandscape ? 24 : 20),
                     ),
                     const SizedBox(width: 8),
                     Text(
                       text,
                       style: TextStyle(
                         fontFamily: 'SpoqaHanSansNeo',
-                        fontSize: isTabletLandscape ? 18 : 16,
+                        fontSize: isPortrait
+                            ? 15
+                            : (isTabletLandscape ? 18 : 16),
                         fontWeight: FontWeight.w600,
                         color: Colors.white,
                       ),

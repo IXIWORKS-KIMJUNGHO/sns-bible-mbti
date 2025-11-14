@@ -149,18 +149,18 @@ class QuestionnaireNotifier extends StateNotifier<QuestionnaireState> {
   
   List<MapEntry<String, int>> getTop3Characters() {
     if (state.characterScores.isEmpty) return [];
-    
+
     var sortedScores = state.characterScores.entries.toList()
       ..sort((a, b) => b.value.compareTo(a.value));
-    
+
     // 디버깅용 로그 출력
-    print('===== 최종 점수 결과 =====');
-    for (var entry in sortedScores) {
-      print('${entry.key}: ${entry.value}점');
-    }
-    print('상위 1위: ${sortedScores.isNotEmpty ? sortedScores.first.key : "없음"}');
-    print('=======================');
-    
+    // print('===== 최종 점수 결과 =====');
+    // for (var entry in sortedScores) {
+    //   print('${entry.key}: ${entry.value}점');
+    // }
+    // print('상위 1위: ${sortedScores.isNotEmpty ? sortedScores.first.key : "없음"}');
+    // print('=======================');
+
     return sortedScores.take(3).toList();
   }
 

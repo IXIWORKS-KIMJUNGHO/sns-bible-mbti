@@ -9,39 +9,45 @@ class ImprovedTraitComparison extends StatelessWidget {
   final BiblicalCharacter selectedCharacter;
   final BiblicalCharacter matchedCharacter;
   final bool isTabletLandscape;
-  
+  final bool isPortrait;
+
   const ImprovedTraitComparison({
     super.key,
     required this.selectedCharacter,
     required this.matchedCharacter,
     required this.isTabletLandscape,
+    this.isPortrait = false,
   });
-  
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    
+
     // Find common and unique traits
     final commonTraits = selectedCharacter.traits
         .where((trait) => matchedCharacter.traits.contains(trait))
         .toList();
-    
+
     final selectedUniqueTraits = selectedCharacter.traits
         .where((trait) => !matchedCharacter.traits.contains(trait))
         .toList();
-    
+
     final matchedUniqueTraits = matchedCharacter.traits
         .where((trait) => !selectedCharacter.traits.contains(trait))
         .toList();
-    
+
     return GlassCard(
-      width: isTabletLandscape ? screenWidth * 0.7 : screenWidth * 0.9,
+      width: isPortrait
+          ? screenWidth * 0.95
+          : (isTabletLandscape ? screenWidth * 0.7 : screenWidth * 0.9),
       padding: EdgeInsets.zero,
       child: Column(
         children: [
           // Header Section
           Container(
-            padding: EdgeInsets.all(isTabletLandscape ? 24 : 20),
+            padding: EdgeInsets.all(
+              isPortrait ? 16 : (isTabletLandscape ? 24 : 20),
+            ),
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
@@ -64,7 +70,7 @@ class ImprovedTraitComparison extends StatelessWidget {
                       Icon(
                         Icons.star_outline,
                         color: AppColors.textSecondary,
-                        size: isTabletLandscape ? 28 : 24,
+                        size: isPortrait ? 20 : (isTabletLandscape ? 28 : 24),
                       ),
                       const SizedBox(height: 8),
                       Text(
@@ -81,14 +87,12 @@ class ImprovedTraitComparison extends StatelessWidget {
                         '닮고 싶은 인물',
                         style: AppTypography.withGlassEffect(
                           AppTypography.caption,
-                        ).copyWith(
-                          color: AppColors.textTertiary,
-                        ),
+                        ).copyWith(color: AppColors.textTertiary),
                       ),
                     ],
                   ),
                 ),
-                
+
                 // VS Indicator
                 Container(
                   padding: const EdgeInsets.symmetric(
@@ -98,26 +102,21 @@ class ImprovedTraitComparison extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: AppColors.glassLight,
                     borderRadius: BorderRadius.circular(20),
-                    border: Border.all(
-                      color: AppColors.borderLight,
-                      width: 1,
-                    ),
+                    border: Border.all(color: AppColors.borderLight, width: 1),
                   ),
                   child: Text(
                     'VS',
-                    style: AppTypography.withGlassEffect(
-                      AppTypography.h3,
-                    ),
+                    style: AppTypography.withGlassEffect(AppTypography.h3),
                   ),
                 ),
-                
+
                 Expanded(
                   child: Column(
                     children: [
                       Icon(
                         Icons.emoji_events_outlined,
                         color: AppColors.textSecondary,
-                        size: isTabletLandscape ? 28 : 24,
+                        size: isPortrait ? 20 : (isTabletLandscape ? 28 : 24),
                       ),
                       const SizedBox(height: 8),
                       Text(
@@ -134,9 +133,7 @@ class ImprovedTraitComparison extends StatelessWidget {
                         '매칭 결과',
                         style: AppTypography.withGlassEffect(
                           AppTypography.caption,
-                        ).copyWith(
-                          color: AppColors.textTertiary,
-                        ),
+                        ).copyWith(color: AppColors.textTertiary),
                       ),
                     ],
                   ),
@@ -144,10 +141,12 @@ class ImprovedTraitComparison extends StatelessWidget {
               ],
             ),
           ),
-          
+
           // Content Section
           Padding(
-            padding: EdgeInsets.all(isTabletLandscape ? 24 : 20),
+            padding: EdgeInsets.all(
+              isPortrait ? 16 : (isTabletLandscape ? 24 : 20),
+            ),
             child: Column(
               children: [
                 // Common Traits Section
@@ -167,7 +166,7 @@ class ImprovedTraitComparison extends StatelessWidget {
                   ),
                   const SizedBox(height: 24),
                 ],
-                
+
                 // Unique Traits Comparison
                 _buildSectionHeader(
                   '고유 특성',
@@ -233,7 +232,7 @@ class ImprovedTraitComparison extends StatelessWidget {
       ),
     );
   }
-  
+
   Widget _buildSectionHeader(
     String title,
     IconData icon,
@@ -245,10 +244,7 @@ class ImprovedTraitComparison extends StatelessWidget {
       children: [
         Container(
           padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: tintColor,
-            shape: BoxShape.circle,
-          ),
+          decoration: BoxDecoration(color: tintColor, shape: BoxShape.circle),
           child: Icon(
             icon,
             color: AppColors.textPrimary,
@@ -259,16 +255,13 @@ class ImprovedTraitComparison extends StatelessWidget {
         Text(
           title,
           style: AppTypography.withGlassEffect(
-            AppTypography.getResponsive(
-              AppTypography.h3,
-              isTabletLandscape,
-            ),
+            AppTypography.getResponsive(AppTypography.h3, isTabletLandscape),
           ),
         ),
       ],
     );
   }
-  
+
   Widget _buildTraitGrid(
     List<String> traits,
     Color backgroundColor,
@@ -279,32 +272,37 @@ class ImprovedTraitComparison extends StatelessWidget {
       alignment: centered ? WrapAlignment.center : WrapAlignment.start,
       spacing: 8,
       runSpacing: 8,
-      children: traits.map((trait) => _buildTraitChip(
-        trait,
-        backgroundColor,
-        isTabletLandscape,
-      )).toList(),
+      children: traits
+          .map(
+            (trait) =>
+                _buildTraitChip(trait, backgroundColor, isTabletLandscape),
+          )
+          .toList(),
     );
   }
-  
+
   Widget _buildTraitList(
     List<String> traits,
     Color backgroundColor,
     bool isTabletLandscape,
   ) {
     return Column(
-      children: traits.map((trait) => Padding(
-        padding: const EdgeInsets.only(bottom: 6),
-        child: _buildTraitChip(
-          trait,
-          backgroundColor,
-          isTabletLandscape,
-          fullWidth: true,
-        ),
-      )).toList(),
+      children: traits
+          .map(
+            (trait) => Padding(
+              padding: const EdgeInsets.only(bottom: 6),
+              child: _buildTraitChip(
+                trait,
+                backgroundColor,
+                isTabletLandscape,
+                fullWidth: true,
+              ),
+            ),
+          )
+          .toList(),
     );
   }
-  
+
   Widget _buildTraitChip(
     String trait,
     Color backgroundColor,
@@ -320,18 +318,12 @@ class ImprovedTraitComparison extends StatelessWidget {
       decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: AppColors.borderLight,
-          width: 1,
-        ),
+        border: Border.all(color: AppColors.borderLight, width: 1),
       ),
       child: Text(
         trait,
         style: AppTypography.withGlassEffect(
-          AppTypography.getResponsive(
-            AppTypography.caption,
-            isTabletLandscape,
-          ),
+          AppTypography.getResponsive(AppTypography.caption, isTabletLandscape),
         ),
         textAlign: fullWidth ? TextAlign.center : TextAlign.start,
       ),

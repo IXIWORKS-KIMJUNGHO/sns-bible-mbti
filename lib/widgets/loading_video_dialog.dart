@@ -63,8 +63,8 @@ class _LoadingVideoDialogState extends State<LoadingVideoDialog> {
                   children: [
                     // 비디오 플레이어
                     Container(
-                      width: 400,
-                      height: 400,
+                      width: 360,
+                      height: 360,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                       ),

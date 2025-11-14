@@ -6,8 +6,9 @@ import '../../models/biblical_question.dart';
 import '../../providers/questionnaire_provider.dart';
 import '../../providers/user_name_provider.dart';
 import '../../widgets/video_background.dart';
-import '../../widgets/circular_liquid_glass_widget.dart';
+import '../../widgets/rectangular_liquid_glass_widget.dart';
 import '../../widgets/home_button.dart';
+import '../../utils/responsive_layout.dart';
 
 class QuestionnaireScreen extends ConsumerStatefulWidget {
   const QuestionnaireScreen({super.key});
@@ -95,8 +96,11 @@ class _QuestionnaireScreenState extends ConsumerState<QuestionnaireScreen>
     final questionState = ref.watch(questionnaireProvider);
     final userName = ref.watch(userNameProvider);
     final screenSize = MediaQuery.of(context).size;
-    final isTabletLandscape =
-        screenSize.width > 1500 && screenSize.aspectRatio > 1.2;
+    final deviceType = ResponsiveLayout.getDeviceType(context);
+    final fontScale = ResponsiveLayout.getFontScale(deviceType);
+    final isPortrait = ResponsiveLayout.isPortrait(deviceType);
+    final portraitFontBoost = isPortrait ? 1.2 : 1.0;
+    final isTabletLandscape = deviceType == DeviceType.tabletLandscape;
 
     if (questionState.questions.isEmpty) {
       return const Scaffold(
@@ -106,13 +110,16 @@ class _QuestionnaireScreenState extends ConsumerState<QuestionnaireScreen>
 
     final currentQuestion = questionState.questions[questionState.currentIndex];
     // 셔플된 옵션 가져오기
-    final shuffledOptions = ref.read(questionnaireProvider.notifier).getShuffledOptions(questionState.currentIndex);
+    final shuffledOptions = ref
+        .read(questionnaireProvider.notifier)
+        .getShuffledOptions(questionState.currentIndex);
     final progress =
         (questionState.currentIndex + 1) / questionState.questions.length;
 
     return Scaffold(
       body: VideoBackground(
         videoPath: 'assets/videos/intro_video.mp4',
+        isPortrait: isPortrait,
         child: Stack(
           children: [
             SafeArea(
@@ -122,17 +129,24 @@ class _QuestionnaireScreenState extends ConsumerState<QuestionnaireScreen>
                 ),
                 child: Column(
                   children: [
+                    // 상단 여백 (홈버튼 아래로 배치)
+                    SizedBox(height: isPortrait ? 80 : 0),
+
                     // 상단 헤더 및 진행바
                     Padding(
                       padding: EdgeInsets.symmetric(
-                        horizontal: isTabletLandscape ? 40 : 20,
-                        vertical: isTabletLandscape ? 20 : 15,
+                        horizontal: isPortrait
+                            ? 16
+                            : (isTabletLandscape ? 40 : 20),
+                        vertical: isPortrait
+                            ? 12
+                            : (isTabletLandscape ? 20 : 15),
                       ),
                       child: Column(
                         children: [
                           // 진행바
                           Container(
-                            height: 6,
+                            height: isPortrait ? 5 : 6,
                             decoration: BoxDecoration(
                               color: Colors.white.withValues(alpha: 0.2),
                               borderRadius: BorderRadius.circular(3),
@@ -148,13 +162,15 @@ class _QuestionnaireScreenState extends ConsumerState<QuestionnaireScreen>
                               ),
                             ),
                           ),
-                          const SizedBox(height: 12),
+                          SizedBox(height: isPortrait ? 10 : 12),
                           // 진행 상황 텍스트
                           Text(
                             '$userName님의 선택 ${questionState.currentIndex + 1} / ${questionState.questions.length}',
                             style: TextStyle(
                               fontFamily: 'SpoqaHanSansNeo',
-                              fontSize: isTabletLandscape ? 16 : 14,
+                              fontSize: isPortrait
+                                  ? 13 * fontScale * portraitFontBoost
+                                  : (isTabletLandscape ? 16 : 14) * fontScale,
                               fontWeight: FontWeight.w500,
                               color: Colors.white.withValues(alpha: 0.9),
                             ),
@@ -166,78 +182,108 @@ class _QuestionnaireScreenState extends ConsumerState<QuestionnaireScreen>
                     // 중앙 질문 카드
                     Expanded(
                       child: Center(
-                        child: Container(
-                          width: isTabletLandscape ? 800 : 580,
-                          height: isTabletLandscape ? 800 : 580,
-                          child: CircularLiquidGlassWidget(
-                            customRadius: isTabletLandscape ? 400 : 290,
-                            child: Padding(
-                              padding: EdgeInsets.all(
-                                isTabletLandscape ? 60 : 25,
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  // 질문 텍스트
-                                  Text(
-                                    currentQuestion.text,
-                                    style: TextStyle(
-                                      fontFamily: 'SpoqaHanSansNeo',
-                                      fontSize: isTabletLandscape ? 24 : 20,
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.white,
-                                      height: 1.4,
-                                      shadows: const [
-                                        Shadow(
-                                          offset: Offset(1, 1),
-                                          blurRadius: 4.0,
-                                          color: Colors.black38,
-                                        ),
-                                      ],
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
+                        child: RectangularLiquidGlassWidget(
+                          width: isPortrait
+                              ? screenSize.width * 0.95
+                              : (isTabletLandscape ? 800 : 580),
+                          height: isPortrait
+                              ? (screenSize.width * 0.95) * 1.6 // 1:1.6 비율
+                              : (isTabletLandscape ? 650 : 580),
+                          borderRadius: isPortrait ? 25 : 28,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: isPortrait
+                                  ? 24
+                                  : (isTabletLandscape ? 60 : 32),
+                              vertical: isPortrait
+                                  ? 28
+                                  : (isTabletLandscape ? 60 : 40),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                const Spacer(flex: 2),
 
-                                  SizedBox(height: isTabletLandscape ? 30 : 25),
-
-                                  // 답변 버튼들 - 셔플된 옵션 사용
-                                  Container(
-                                    constraints: BoxConstraints(
-                                      maxWidth: isTabletLandscape ? 600 : 500,
-                                    ),
-                                    child: Column(
-                                      children: List.generate(
-                                        shuffledOptions.length,
-                                        (index) {
-                                      // 셔플된 인덱스를 원본 인덱스로 변환하여 선택 상태 확인
-                                      final originalIndex = ref.read(questionnaireProvider.notifier)
-                                          .getOriginalIndex(questionState.currentIndex, index);
-                                      final isSelected = questionState
-                                          .selectedAnswers[questionState.currentIndex] == originalIndex;
-                                      
-                                      return FadeTransition(
-                                        opacity: _buttonAnimations[index],
-                                        child: Transform.translate(
-                                          offset: Offset(
-                                            0,
-                                            (1 - _buttonAnimations[index].value) * 20,
-                                          ),
-                                          child: _AnswerButton(
-                                            option: shuffledOptions[index],
-                                            index: index,
-                                            isSelected: isSelected,
-                                            onTap: () => _selectAnswer(index),
-                                            isTabletLandscape: isTabletLandscape,
-                                          ),
-                                        ),
-                                      );
-                                        },
+                                // 질문 텍스트
+                                Text(
+                                  currentQuestion.text,
+                                  style: TextStyle(
+                                    fontFamily: 'SpoqaHanSansNeo',
+                                    fontSize: isPortrait
+                                        ? 17 * fontScale * portraitFontBoost
+                                        : (isTabletLandscape ? 24 : 20) *
+                                              fontScale,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.white,
+                                    height: 1.4,
+                                    shadows: const [
+                                      Shadow(
+                                        offset: Offset(1, 1),
+                                        blurRadius: 4.0,
+                                        color: Colors.black38,
                                       ),
+                                    ],
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+
+                                const Spacer(flex: 1),
+
+                                // 답변 버튼들 - 셔플된 옵션 사용
+                                Container(
+                                  constraints: BoxConstraints(
+                                    maxWidth: isPortrait
+                                        ? double.infinity
+                                        : (isTabletLandscape ? 600 : 500),
+                                  ),
+                                  child: Column(
+                                    children: List.generate(
+                                      shuffledOptions.length,
+                                      (index) {
+                                        // 셔플된 인덱스를 원본 인덱스로 변환하여 선택 상태 확인
+                                        final originalIndex = ref
+                                            .read(
+                                              questionnaireProvider.notifier,
+                                            )
+                                            .getOriginalIndex(
+                                              questionState.currentIndex,
+                                              index,
+                                            );
+                                        final isSelected = questionState
+                                                .selectedAnswers[
+                                            questionState.currentIndex] ==
+                                        originalIndex;
+
+                                        return FadeTransition(
+                                          opacity: _buttonAnimations[index],
+                                          child: Transform.translate(
+                                            offset: Offset(
+                                              0,
+                                              (1 -
+                                                      _buttonAnimations[index]
+                                                          .value) *
+                                                  20,
+                                            ),
+                                            child: _AnswerButton(
+                                              option: shuffledOptions[index],
+                                              index: index,
+                                              isSelected: isSelected,
+                                              onTap: () => _selectAnswer(index),
+                                              isTabletLandscape:
+                                                  isTabletLandscape,
+                                              isPortrait: isPortrait,
+                                              fontScale: fontScale,
+                                            ),
+                                          ),
+                                        );
+                                      },
                                     ),
                                   ),
-                                ],
-                              ),
+                                ),
+
+                                const Spacer(flex: 2),
+                              ],
                             ),
                           ),
                         ),
@@ -245,7 +291,9 @@ class _QuestionnaireScreenState extends ConsumerState<QuestionnaireScreen>
                     ),
 
                     // 하단 여백만
-                    SizedBox(height: isTabletLandscape ? 30 : 20),
+                    SizedBox(
+                      height: isPortrait ? 16 : (isTabletLandscape ? 30 : 20),
+                    ),
                   ],
                 ),
               ),
@@ -267,6 +315,8 @@ class _AnswerButton extends StatefulWidget {
   final bool isSelected;
   final VoidCallback onTap;
   final bool isTabletLandscape;
+  final bool isPortrait;
+  final double fontScale;
 
   const _AnswerButton({
     required this.option,
@@ -274,6 +324,8 @@ class _AnswerButton extends StatefulWidget {
     required this.isSelected,
     required this.onTap,
     required this.isTabletLandscape,
+    required this.isPortrait,
+    required this.fontScale,
   });
 
   @override
@@ -337,14 +389,16 @@ class _AnswerButtonState extends State<_AnswerButton>
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeOutCubic,
-            margin: const EdgeInsets.symmetric(vertical: 6),
-            transform: Matrix4.identity()
-              ..scale(
-                widget.isSelected ? 1.02 : 1.0,
-                widget.isSelected ? 1.02 : 1.0,
-              ),
+            margin: EdgeInsets.symmetric(vertical: widget.isPortrait ? 8 : 6),
+            transform: Matrix4.diagonal3Values(
+              widget.isSelected ? 1.02 : 1.0,
+              widget.isSelected ? 1.02 : 1.0,
+              1.0,
+            ),
             child: Container(
-              height: widget.isTabletLandscape ? 80 : 70,
+              height: widget.isPortrait
+                  ? 60
+                  : (widget.isTabletLandscape ? 80 : 70),
               decoration: BoxDecoration(
                 color: widget.isSelected
                     ? Colors.white.withValues(alpha: 0.2)
@@ -374,16 +428,16 @@ class _AnswerButtonState extends State<_AnswerButton>
                       borderRadius: BorderRadius.circular(20),
                       onTap: _handleTap,
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 24,
-                          vertical: 16,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: widget.isPortrait ? 16 : 24,
+                          vertical: widget.isPortrait ? 12 : 16,
                         ),
                         child: Row(
                           children: [
                             // 옵션 라벨
                             Container(
-                              width: 40,
-                              height: 40,
+                              width: widget.isPortrait ? 36 : 40,
+                              height: widget.isPortrait ? 36 : 40,
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 border: Border.all(
@@ -397,15 +451,16 @@ class _AnswerButtonState extends State<_AnswerButton>
                                   style: TextStyle(
                                     fontFamily: 'SpoqaHanSansNeo',
                                     color: Colors.white,
-                                    fontSize: widget.isTabletLandscape
-                                        ? 18
-                                        : 16,
+                                    fontSize: widget.isPortrait
+                                        ? 14 * widget.fontScale
+                                        : (widget.isTabletLandscape ? 18 : 16) *
+                                              widget.fontScale,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
                               ),
                             ),
-                            const SizedBox(width: 20),
+                            SizedBox(width: widget.isPortrait ? 12 : 20),
                             // 답변 텍스트
                             Expanded(
                               child: Text(
@@ -413,7 +468,10 @@ class _AnswerButtonState extends State<_AnswerButton>
                                 style: TextStyle(
                                   fontFamily: 'SpoqaHanSansNeo',
                                   color: Colors.white,
-                                  fontSize: widget.isTabletLandscape ? 18 : 16,
+                                  fontSize: widget.isPortrait
+                                      ? 14 * widget.fontScale
+                                      : (widget.isTabletLandscape ? 18 : 16) *
+                                            widget.fontScale,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -423,7 +481,9 @@ class _AnswerButtonState extends State<_AnswerButton>
                               Icon(
                                 Icons.check_circle,
                                 color: Colors.white,
-                                size: widget.isTabletLandscape ? 28 : 24,
+                                size: widget.isPortrait
+                                    ? 22
+                                    : (widget.isTabletLandscape ? 28 : 24),
                               ),
                           ],
                         ),
@@ -436,80 +496,6 @@ class _AnswerButtonState extends State<_AnswerButton>
           ),
         );
       },
-    );
-  }
-}
-
-// 네비게이션 버튼 위젯
-class _NavigationButton extends StatelessWidget {
-  final VoidCallback onTap;
-  final IconData icon;
-  final String label;
-  final bool isPrimary;
-
-  const _NavigationButton({
-    required this.onTap,
-    required this.icon,
-    required this.label,
-    this.isPrimary = false,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: isPrimary
-            ? const LinearGradient(
-                colors: [Colors.white, Color(0xFFF0F0F0)],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-              )
-            : null,
-        color: isPrimary ? null : Colors.white.withValues(alpha: 0.2),
-        borderRadius: BorderRadius.circular(26),
-        border: Border.all(
-          color: Colors.white.withValues(alpha: isPrimary ? 0.8 : 0.3),
-          width: isPrimary ? 2 : 1.5,
-        ),
-      ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          borderRadius: BorderRadius.circular(26),
-          onTap: onTap,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (icon == Icons.arrow_back_ios)
-                  Icon(
-                    icon,
-                    color: isPrimary ? const Color(0xFF6B73FF) : Colors.white,
-                    size: 20,
-                  ),
-                const SizedBox(width: 8),
-                Text(
-                  label,
-                  style: TextStyle(
-                    fontFamily: 'SpoqaHanSansNeo',
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: isPrimary ? const Color(0xFF6B73FF) : Colors.white,
-                  ),
-                ),
-                const SizedBox(width: 8),
-                if (icon == Icons.arrow_forward_ios)
-                  Icon(
-                    icon,
-                    color: isPrimary ? const Color(0xFF6B73FF) : Colors.white,
-                    size: 20,
-                  ),
-              ],
-            ),
-          ),
-        ),
-      ),
     );
   }
 }

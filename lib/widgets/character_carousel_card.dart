@@ -2,16 +2,19 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import '../models/biblical_character.dart';
+import '../utils/responsive_layout.dart';
 
 /// 성경인물 선택용 글래스모피즘 카드 위젯
 ///
-/// iPad 13인치 가로모드에 최적화된 캐러셀 카드
+/// 반응형으로 최적화된 캐러셀 카드
 class CharacterCarouselCard extends StatefulWidget {
   final BiblicalCharacter character;
   final bool isSelected;
   final bool isCenter;
   final VoidCallback? onTap;
   final double opacity;
+  final DeviceType deviceType;
+  final double screenWidth;
 
   const CharacterCarouselCard({
     super.key,
@@ -20,6 +23,8 @@ class CharacterCarouselCard extends StatefulWidget {
     required this.isCenter,
     required this.onTap,
     this.opacity = 1.0,
+    required this.deviceType,
+    required this.screenWidth,
   });
 
   @override
@@ -142,6 +147,11 @@ class _CharacterCarouselCardState extends State<CharacterCarouselCard>
   @override
   Widget build(BuildContext context) {
     final cardOpacity = widget.isCenter ? 1.0 : 0.7;
+    final isPortrait = ResponsiveLayout.isPortrait(widget.deviceType);
+
+    // 세로형: 화면 너비의 73.5% (70% * 1.05), 1:1.6 비율, 가로형: 고정 크기
+    final cardWidth = isPortrait ? widget.screenWidth * 0.735 : 280.0;
+    final cardHeight = isPortrait ? cardWidth * 1.6 : 420.0;
 
     return AnimatedBuilder(
       animation: _scaleAnimation,
@@ -157,22 +167,24 @@ class _CharacterCarouselCardState extends State<CharacterCarouselCard>
                 duration: const Duration(milliseconds: 300),
                 opacity: cardOpacity * widget.opacity,
                 child: Container(
-                  width: 280,
-                  height: 420,
-                  margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 20), // 위아래 여백 추가
+                  width: cardWidth,
+                  height: cardHeight,
+                  margin: EdgeInsets.symmetric(horizontal: 8, vertical: 20),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(24),
+                    borderRadius: BorderRadius.circular(isPortrait ? 25 : 24),
                     child: BackdropFilter(
                       filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
                       child: Container(
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(24),
+                          borderRadius: BorderRadius.circular(
+                            isPortrait ? 25 : 24,
+                          ),
                           color: Colors.white.withValues(alpha: 0.15),
                           border: Border.all(
                             color: widget.isSelected
                                 ? Colors.white.withValues(alpha: 0.9)
                                 : Colors.white.withValues(alpha: 0.3),
-                            width: widget.isSelected ? 3.0 : 2.0,
+                            width: widget.isSelected ? 1.5 : 1.0,
                           ),
                           boxShadow: [
                             if (widget.isSelected || _isHovered)
@@ -189,15 +201,17 @@ class _CharacterCarouselCardState extends State<CharacterCarouselCard>
                           ],
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.all(20),
+                          padding: EdgeInsets.all(isPortrait ? 21 : 20),
                           child: Column(
                             children: [
                               // 선택 표시기
                               if (widget.isSelected)
                                 Container(
-                                  width: 24,
-                                  height: 24,
-                                  margin: const EdgeInsets.only(bottom: 12),
+                                  width: isPortrait ? 25 : 24,
+                                  height: isPortrait ? 25 : 24,
+                                  margin: EdgeInsets.only(
+                                    bottom: isPortrait ? 13 : 12,
+                                  ),
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                     shape: BoxShape.circle,
@@ -205,21 +219,23 @@ class _CharacterCarouselCardState extends State<CharacterCarouselCard>
                                   child: Icon(
                                     Icons.check,
                                     color: Colors.black.withValues(alpha: 0.8),
-                                    size: 16,
+                                    size: isPortrait ? 17 : 16,
                                   ),
                                 ),
 
                               // 캐릭터 비디오 또는 이미지 플레이스홀더
                               Container(
-                                width: 160,
-                                height: 160,
-                                margin: const EdgeInsets.only(bottom: 24),
+                                width: isPortrait ? 168 : 160,
+                                height: isPortrait ? 168 : 160,
+                                margin: EdgeInsets.only(
+                                  bottom: isPortrait ? 21 : 24,
+                                ),
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   color: Colors.white.withValues(alpha: 0.1),
                                   border: Border.all(
                                     color: Colors.white.withValues(alpha: 0.3),
-                                    width: 2,
+                                    width: 1.0,
                                   ),
                                 ),
                                 child: ClipOval(
@@ -232,7 +248,7 @@ class _CharacterCarouselCardState extends State<CharacterCarouselCard>
                                         )
                                       : Icon(
                                           Icons.person_outline,
-                                          size: 80,
+                                          size: isPortrait ? 84 : 80,
                                           color: Colors.white.withValues(
                                             alpha: 0.8,
                                           ),
@@ -243,12 +259,12 @@ class _CharacterCarouselCardState extends State<CharacterCarouselCard>
                               // 캐릭터 이름
                               Text(
                                 widget.character.name,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontFamily: 'SpoqaHanSansNeo',
-                                  fontSize: 21,
+                                  fontSize: isPortrait ? 20 : 21,
                                   fontWeight: FontWeight.w700,
                                   color: Colors.white,
-                                  shadows: [
+                                  shadows: const [
                                     Shadow(
                                       offset: Offset(1, 1),
                                       blurRadius: 4.0,
@@ -259,14 +275,14 @@ class _CharacterCarouselCardState extends State<CharacterCarouselCard>
                                 textAlign: TextAlign.center,
                               ),
 
-                              const SizedBox(height: 8),
+                              SizedBox(height: isPortrait ? 6 : 8),
 
                               // 캐릭터 타이틀
                               Text(
                                 widget.character.title,
                                 style: TextStyle(
                                   fontFamily: 'SpoqaHanSansNeo',
-                                  fontSize: 13,
+                                  fontSize: isPortrait ? 14 : 13,
                                   fontWeight: FontWeight.w500,
                                   color: Colors.white.withValues(alpha: 0.8),
                                   shadows: const [
@@ -280,20 +296,20 @@ class _CharacterCarouselCardState extends State<CharacterCarouselCard>
                                 textAlign: TextAlign.center,
                               ),
 
-                              const SizedBox(height: 12),
+                              SizedBox(height: isPortrait ? 13 : 12),
 
                               // 캐릭터 설명 - 더 많은 공간 할당
                               Expanded(
-                                flex: 4, // 더 많은 공간 할당
+                                flex: 4,
                                 child: Text(
                                   widget.character.description,
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontFamily: 'SpoqaHanSansNeo',
-                                    fontSize: 13,
+                                    fontSize: isPortrait ? 14 : 13,
                                     fontWeight: FontWeight.w400,
                                     color: Colors.white,
                                     height: 1.5,
-                                    shadows: [
+                                    shadows: const [
                                       Shadow(
                                         offset: Offset(0.5, 0.5),
                                         blurRadius: 2.0,
@@ -305,10 +321,10 @@ class _CharacterCarouselCardState extends State<CharacterCarouselCard>
                                 ),
                               ),
 
-                              const SizedBox(height: 16), // 키워드와 설명 사이 여백
+                              const SizedBox(height: 10), // 키워드와 설명 사이 여백
                               // 특성 태그들 - 카드 맨 하단 고정
                               SizedBox(
-                                height: 13, // 고정 높이
+                                height: 40, // 고정 높이
                                 child: Wrap(
                                   spacing: 6,
                                   runSpacing: 6,
@@ -316,29 +332,29 @@ class _CharacterCarouselCardState extends State<CharacterCarouselCard>
                                   children: widget.character.traits.take(3).map(
                                     (trait) {
                                       return Container(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 8,
-                                          vertical: 4,
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: isPortrait ? 8 : 8,
+                                          vertical: isPortrait ? 4 : 4,
                                         ),
                                         decoration: BoxDecoration(
                                           color: Colors.white.withValues(
                                             alpha: 0.15,
                                           ),
                                           borderRadius: BorderRadius.circular(
-                                            12,
+                                            isPortrait ? 13 : 12,
                                           ),
                                           border: Border.all(
                                             color: Colors.white.withValues(
                                               alpha: 0.3,
                                             ),
-                                            width: 1,
+                                            width: 0.5,
                                           ),
                                         ),
                                         child: Text(
                                           trait,
-                                          style: const TextStyle(
+                                          style: TextStyle(
                                             fontFamily: 'SpoqaHanSansNeo',
-                                            fontSize: 11,
+                                            fontSize: isPortrait ? 12 : 11,
                                             fontWeight: FontWeight.w500,
                                             color: Colors.white,
                                           ),

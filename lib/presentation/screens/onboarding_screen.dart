@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../widgets/circular_liquid_glass_widget.dart';
+import '../../widgets/rectangular_liquid_glass_widget.dart';
 import '../../widgets/video_background.dart';
 import '../../providers/user_name_provider.dart';
+import '../../utils/responsive_layout.dart';
 
 class OnboardingScreen extends ConsumerStatefulWidget {
   const OnboardingScreen({super.key});
@@ -36,33 +37,52 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   Widget build(BuildContext context) {
     final isNameValid = ref.watch(isNameValidProvider);
     final keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
+    final deviceType = ResponsiveLayout.getDeviceType(context);
+    final fontScale = ResponsiveLayout.getFontScale(deviceType);
+    final screenSize = MediaQuery.of(context).size;
+
+    // Portrait mode에서 폰트 크기 20% 증가 (입력 필드와 버튼 제외)
+    final isPortrait = ResponsiveLayout.isPortrait(deviceType);
+    final portraitFontBoost = isPortrait ? 1.2 : 1.0;
+
+    // Calculate widget dimensions with aspect ratio
+    final widgetWidth = screenSize.width * 0.95;
+    final widgetHeight = widgetWidth * 1.6 * 0.85; // 세로 길이 85%
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: VideoBackground(
         videoPath: 'assets/videos/intro_video.mp4',
+        isPortrait: isPortrait,
         child: Stack(
           children: [
             // Scrollable content to prevent overflow
             Center(
               child: SingleChildScrollView(
                 padding: EdgeInsets.only(bottom: keyboardHeight),
-                child: CircularLiquidGlassWidget(
+                child: RectangularLiquidGlassWidget(
+                  width: widgetWidth,
+                  height: widgetHeight,
                   child: Padding(
-                    padding: const EdgeInsets.all(20.0),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: ResponsiveLayout.isMobile(deviceType) ? 24 : 32,
+                      vertical: ResponsiveLayout.isMobile(deviceType) ? 50 : 60,
+                    ),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisSize: MainAxisSize.max,
                       children: [
+                        const Spacer(flex: 2),
+
                         // Title
-                        const Text(
+                        Text(
                           '성경 인물 매칭',
                           style: TextStyle(
                             fontFamily: 'SpoqaHanSansNeo',
-                            fontSize: 32,
+                            fontSize: 32 * fontScale * portraitFontBoost,
                             fontWeight: FontWeight.w700,
-                            color: Color.fromRGBO(255, 255, 255, 1),
-                            shadows: [
+                            color: const Color.fromRGBO(255, 255, 255, 1),
+                            shadows: const [
                               Shadow(
                                 offset: Offset(1, 1),
                                 blurRadius: 4.0,
@@ -73,18 +93,18 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                           textAlign: TextAlign.center,
                         ),
 
-                        const SizedBox(height: 20),
+                        const Spacer(flex: 1),
 
                         // Description
-                        const Text(
+                        Text(
                           '"믿음의 선택들을 통해\n나와 비슷한 성경 인물을 만나보세요"',
                           style: TextStyle(
                             fontFamily: 'SpoqaHanSansNeo',
-                            fontSize: 16,
+                            fontSize: 16 * fontScale * portraitFontBoost,
                             fontWeight: FontWeight.w400,
                             color: Colors.white,
                             height: 1.5,
-                            shadows: [
+                            shadows: const [
                               Shadow(
                                 offset: Offset(0.5, 0.5),
                                 blurRadius: 2.0,
@@ -95,7 +115,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                           textAlign: TextAlign.center,
                         ),
 
-                        const SizedBox(height: 35),
+                        const Spacer(flex: 2),
 
                         // 구분선
                         Container(
@@ -112,17 +132,17 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                           ),
                         ),
 
-                        const SizedBox(height: 35),
+                        const Spacer(flex: 2),
 
                         // Name Input Instruction
-                        const Text(
+                        Text(
                           '이름을 입력하고 시작해주세요',
                           style: TextStyle(
                             fontFamily: 'SpoqaHanSansNeo',
-                            fontSize: 14,
+                            fontSize: 14 * fontScale * portraitFontBoost,
                             fontWeight: FontWeight.w500,
                             color: Colors.white,
-                            shadows: [
+                            shadows: const [
                               Shadow(
                                 offset: Offset(0.5, 0.5),
                                 blurRadius: 2.0,
@@ -133,11 +153,11 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                           textAlign: TextAlign.center,
                         ),
 
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 20),
 
                         // Name Input Field
                         Container(
-                          width: 280,
+                          constraints: const BoxConstraints(maxWidth: 280),
                           decoration: BoxDecoration(
                             color: Colors.white.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(16),
@@ -149,9 +169,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                           child: TextField(
                             controller: _nameController,
                             textAlign: TextAlign.center,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontFamily: 'SpoqaHanSansNeo',
-                              fontSize: 18,
+                              fontSize: 18 * fontScale,
                               fontWeight: FontWeight.w500,
                               color: Colors.white,
                             ),
@@ -159,7 +179,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                               hintText: '이름',
                               hintStyle: TextStyle(
                                 fontFamily: 'SpoqaHanSansNeo',
-                                fontSize: 16,
+                                fontSize: 16 * fontScale,
                                 fontWeight: FontWeight.w400,
                                 color: Colors.white.withValues(alpha: 0.5),
                               ),
@@ -182,8 +202,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                           opacity: isNameValid ? 1.0 : 0.5,
                           duration: const Duration(milliseconds: 300),
                           child: Container(
-                            width: 200,
-                            height: 52,
+                            constraints: const BoxConstraints(maxWidth: 160),
+                            height: ResponsiveLayout.getButtonHeight(deviceType) * 0.87,
                             decoration: BoxDecoration(
                               gradient: isNameValid
                                   ? const LinearGradient(
@@ -225,7 +245,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                                     '시작하기',
                                     style: TextStyle(
                                       fontFamily: 'SpoqaHanSansNeo',
-                                      fontSize: 18,
+                                      fontSize: 18 * fontScale * 0.8,
                                       fontWeight: FontWeight.w600,
                                       color: isNameValid
                                           ? const Color(0xFF6B73FF)
@@ -238,6 +258,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                             ),
                           ),
                         ),
+
+                        const Spacer(flex: 2),
                       ],
                     ),
                   ),

@@ -2,19 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/biblical_character.dart';
 import '../providers/character_selection_provider.dart';
+import '../utils/responsive_layout.dart';
 import 'character_carousel_card.dart';
 
 /// 성경인물 선택 캐러셀 위젯
-/// 
-/// iPad 13인치 가로모드에 최적화된 horizontal scrollable carousel
+///
+/// 반응형으로 최적화된 horizontal scrollable carousel
 class CharacterCarousel extends ConsumerStatefulWidget {
   final List<BiblicalCharacter> characters;
   final Function(BiblicalCharacter) onCharacterSelected;
+  final DeviceType deviceType;
 
   const CharacterCarousel({
     super.key,
     required this.characters,
     required this.onCharacterSelected,
+    required this.deviceType,
   });
 
   @override
@@ -35,15 +38,18 @@ class _CharacterCarouselState extends ConsumerState<CharacterCarousel>
   @override
   void initState() {
     super.initState();
-    
+
     // 중앙에서 시작하도록 설정 - 무한 스크롤을 위해 큰 수로 시작
     _currentIndex = widget.characters.length ~/ 2;
     _initialPage = _virtualListSize ~/ 2;
     _currentPage = _initialPage.toDouble();
-    
+
+    // 세로형에서는 viewportFraction 1.0 (중앙정렬 위해), 가로형에서는 5개 카드 표시
+    final viewportFraction = ResponsiveLayout.isPortrait(widget.deviceType) ? 1.0 : 0.2;
+
     _pageController = PageController(
       initialPage: _initialPage,
-      viewportFraction: 0.2, // 5개 카드가 보이도록 (1/5 = 0.2)
+      viewportFraction: viewportFraction,
     );
     
     // 페이지 변화 리스너 추가
@@ -147,9 +153,14 @@ class _CharacterCarouselState extends ConsumerState<CharacterCarousel>
   @override
   Widget build(BuildContext context) {
     final selectedCharacter = ref.watch(selectedCharacterProvider);
-    
+    final isPortrait = ResponsiveLayout.isPortrait(widget.deviceType);
+
+    // 세로형: 카드 1.05배 확대에 맞춰 높이 증가, 가로형: 기존 크기
+    final carouselHeight = isPortrait ? 525.0 : 520.0;
+    final carouselContentHeight = isPortrait ? 485.0 : 480.0;
+
     return SizedBox(
-      height: 520, // 카드 높이 + 호버 확대 여유 공간
+      height: carouselHeight,
       child: Column(
         children: [
           // 캐러셀과 화살표 버튼
@@ -157,7 +168,7 @@ class _CharacterCarouselState extends ConsumerState<CharacterCarousel>
             alignment: Alignment.center,
             children: [
               SizedBox(
-                height: 480, // 420 * 1.05 (호버 스케일) + 여유 공간
+                height: carouselContentHeight,
                 child: GestureDetector(
               onHorizontalDragUpdate: (details) {
                 // macOS에서 드래그 제스처 처리
@@ -211,25 +222,31 @@ class _CharacterCarouselState extends ConsumerState<CharacterCarousel>
                 return AnimatedBuilder(
                   animation: _slideController,
                   builder: (context, child) {
-                    return Center(
-                      child: AnimatedScale(
-                        scale: scale,
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeOutCubic,
-                        child: Transform.translate(
-                          offset: Offset(
-                            isSelected ? _slideController.value * 10 - 5 : 0,
-                            0,
+                    return LayoutBuilder(
+                      builder: (context, constraints) {
+                        return AnimatedScale(
+                          scale: scale,
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeOutCubic,
+                          child: Transform.translate(
+                            offset: Offset(
+                              isSelected ? _slideController.value * 10 - 5 : 0,
+                              0,
+                            ),
+                            child: Center(
+                              child: CharacterCarouselCard(
+                                character: character,
+                                isSelected: isSelected,
+                                isCenter: isCenter,
+                                onTap: isCenter ? () => _selectCharacter(character) : null,
+                                opacity: opacity,
+                                deviceType: widget.deviceType,
+                                screenWidth: constraints.maxWidth,
+                              ),
+                            ),
                           ),
-                          child: CharacterCarouselCard(
-                            character: character,
-                            isSelected: isSelected,
-                            isCenter: isCenter,
-                            onTap: isCenter ? () => _selectCharacter(character) : null,
-                            opacity: opacity,
-                          ),
-                        ),
-                      ),
+                        );
+                      },
                     );
                   },
                 );
@@ -238,53 +255,59 @@ class _CharacterCarouselState extends ConsumerState<CharacterCarousel>
             ),
           ),
               
-              // 왼쪽 화살표 버튼
-              Positioned(
-                left: 20,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.black.withValues(alpha: 0.5),
-                    shape: BoxShape.circle,
-                  ),
-                  child: IconButton(
-                    icon: const Icon(
-                      Icons.arrow_back_ios,
-                      color: Colors.white,
-                      size: 24,
+              // 왼쪽 화살표 버튼 (가로형에서만 표시)
+              if (!isPortrait)
+                Positioned(
+                  left: 20,
+                  child: Container(
+                    width: 48,
+                    height: 48,
+                    decoration: BoxDecoration(
+                      color: Colors.black.withValues(alpha: 0.5),
+                      shape: BoxShape.circle,
                     ),
-                    onPressed: () {
-                      _pageController.previousPage(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeOutCubic,
-                      );
-                    },
+                    child: IconButton(
+                      icon: const Icon(
+                        Icons.arrow_back_ios_new,
+                        color: Colors.white,
+                        size: 24,
+                      ),
+                      onPressed: () {
+                        _pageController.previousPage(
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeOutCubic,
+                        );
+                      },
+                    ),
                   ),
                 ),
-              ),
-              
-              // 오른쪽 화살표 버튼
-              Positioned(
-                right: 20,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.black.withValues(alpha: 0.5),
-                    shape: BoxShape.circle,
-                  ),
-                  child: IconButton(
-                    icon: const Icon(
-                      Icons.arrow_forward_ios,
-                      color: Colors.white,
-                      size: 24,
+
+              // 오른쪽 화살표 버튼 (가로형에서만 표시)
+              if (!isPortrait)
+                Positioned(
+                  right: 20,
+                  child: Container(
+                    width: 48,
+                    height: 48,
+                    decoration: BoxDecoration(
+                      color: Colors.black.withValues(alpha: 0.5),
+                      shape: BoxShape.circle,
                     ),
-                    onPressed: () {
-                      _pageController.nextPage(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeOutCubic,
-                      );
-                    },
+                    child: IconButton(
+                      icon: const Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.white,
+                        size: 24,
+                      ),
+                      onPressed: () {
+                        _pageController.nextPage(
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeOutCubic,
+                        );
+                      },
+                    ),
                   ),
                 ),
-              ),
             ],
           ),
           

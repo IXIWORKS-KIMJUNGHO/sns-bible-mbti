@@ -5,16 +5,17 @@ import 'package:go_router/go_router.dart';
 import '../providers/user_name_provider.dart';
 import '../providers/character_selection_provider.dart';
 import '../providers/questionnaire_provider.dart';
+import '../utils/responsive_layout.dart';
 
 /// 홈 버튼 위젯 - 모든 상태를 초기화하고 인트로 페이지로 이동
-/// 
+///
 /// TF 팀이 데모 중 앱을 초기화할 때 사용
 class HomeButton extends ConsumerWidget {
   final double? size;
   final Color? backgroundColor;
   final Color? iconColor;
   final bool showTooltip;
-  
+
   const HomeButton({
     super.key,
     this.size = 48.0,
@@ -27,10 +28,10 @@ class HomeButton extends ConsumerWidget {
   void _resetAllState(WidgetRef ref) {
     // 사용자 이름 초기화
     ref.read(userNameProvider.notifier).state = '';
-    
+
     // 선택된 캐릭터 초기화
     ref.read(selectedCharacterProvider.notifier).clearSelection();
-    
+
     // 질문지 상태 초기화 (답변, 점수 등)
     ref.read(questionnaireProvider.notifier).reset();
   }
@@ -100,17 +101,19 @@ class TopRightHomeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
-    final isTabletLandscape = screenSize.width > 1500 && screenSize.aspectRatio > 1.2;
-    
+    final deviceType = ResponsiveLayout.getDeviceType(context);
+    final isPortrait = ResponsiveLayout.isPortrait(deviceType);
+    final isTabletLandscape = deviceType == DeviceType.tabletLandscape;
+
+    // 세로형에서는 뒤로가기 버튼과 같은 높이로 배치
+    final topPosition = isPortrait ? 25.0 : (isTabletLandscape ? 60.0 : 50.0);
+    final rightPosition = isPortrait ? 16.0 : (isTabletLandscape ? 40.0 : 20.0);
+    final buttonSize = isPortrait ? 40.0 : (isTabletLandscape ? 56.0 : 48.0);
+
     return Positioned(
-      top: isTabletLandscape ? 60 : 50,
-      right: isTabletLandscape ? 40 : 20,
-      child: SafeArea(
-        child: HomeButton(
-          size: isTabletLandscape ? 56.0 : 48.0,
-        ),
-      ),
+      top: topPosition,
+      right: rightPosition,
+      child: SafeArea(child: HomeButton(size: buttonSize)),
     );
   }
 }
