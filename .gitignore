@@ -50,3 +50,7 @@ claudedocs/
 .last-deployment.txt
 release-notes.txt
 scripts/deploy-ios-firebase.sh
+
+# Firebase
+.firebase/
+firebase-debug.log

@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -370,7 +371,10 @@ class _CharacterCardState extends State<_CharacterCard>
       end: 1.02,
     ).animate(CurvedAnimation(parent: _scaleController, curve: Curves.easeOut));
 
-    _initializeVideo();
+    // 웹이 아닐 때만 비디오 초기화
+    if (!kIsWeb) {
+      _initializeVideo();
+    }
   }
 
   void _initializeVideo() {
@@ -420,6 +424,33 @@ class _CharacterCardState extends State<_CharacterCard>
     return '';
   }
 
+  String _getGifPath(String characterId) {
+    final Map<String, String> gifMapping = {
+      'david': 'David.gif',
+      'esther': 'Esther.gif',
+      'moses': 'Moses.gif',
+      'mary': 'Mary.gif',
+      'joseph': 'Joseph.gif',
+      'paul': 'Paul.gif',
+      'daniel': 'Daniel.gif',
+      'solomon': 'Solomon.gif',
+      'deborah': 'Deborah.gif',
+      'barnabas': 'Barnabas.gif',
+      'luke': 'Luke.gif',
+      'jeremiah': 'Jeremiah.gif',
+      'noah': 'Noah.gif',
+      'rebekah': 'Rebekah.gif',
+      'prodigal_son': 'ProdigalSon.gif',
+      'peter': 'Peter.gif',
+    };
+
+    final fileName = gifMapping[characterId];
+    if (fileName != null) {
+      return 'assets/videos/bible_people_gif/$fileName';
+    }
+    return '';
+  }
+
   @override
   void dispose() {
     _videoController?.dispose();
@@ -433,6 +464,28 @@ class _CharacterCardState extends State<_CharacterCard>
     } else {
       _scaleController.reverse();
     }
+  }
+
+  Widget _buildWebCharacterImage() {
+    final gifPath = _getGifPath(widget.character.id);
+    if (gifPath.isEmpty) {
+      return Icon(
+        Icons.person_outline,
+        size: widget.isPortrait ? 80 : (widget.isTabletLandscape ? 120 : 100),
+        color: Colors.white.withValues(alpha: 0.6),
+      );
+    }
+    return Image.asset(
+      gifPath,
+      fit: BoxFit.cover,
+      errorBuilder: (context, error, stackTrace) {
+        return Icon(
+          Icons.person_outline,
+          size: widget.isPortrait ? 80 : (widget.isTabletLandscape ? 120 : 100),
+          color: Colors.white.withValues(alpha: 0.6),
+        );
+      },
+    );
   }
 
   @override
@@ -499,24 +552,25 @@ class _CharacterCardState extends State<_CharacterCard>
                   child: ClipOval(
                     child: BackdropFilter(
                       filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                      child:
-                          _videoController != null &&
-                              _videoController!.value.isInitialized
-                          ? FittedBox(
-                              fit: BoxFit.cover,
-                              child: SizedBox(
-                                width: _videoController!.value.size.width,
-                                height: _videoController!.value.size.height,
-                                child: VideoPlayer(_videoController!),
-                              ),
-                            )
-                          : Icon(
-                              Icons.person_outline,
-                              size: widget.isPortrait
-                                  ? 80
-                                  : (widget.isTabletLandscape ? 120 : 100),
-                              color: Colors.white.withValues(alpha: 0.6),
-                            ),
+                      child: kIsWeb
+                          ? _buildWebCharacterImage()
+                          : (_videoController != null &&
+                                  _videoController!.value.isInitialized
+                              ? FittedBox(
+                                  fit: BoxFit.cover,
+                                  child: SizedBox(
+                                    width: _videoController!.value.size.width,
+                                    height: _videoController!.value.size.height,
+                                    child: VideoPlayer(_videoController!),
+                                  ),
+                                )
+                              : Icon(
+                                  Icons.person_outline,
+                                  size: widget.isPortrait
+                                      ? 80
+                                      : (widget.isTabletLandscape ? 120 : 100),
+                                  color: Colors.white.withValues(alpha: 0.6),
+                                )),
                     ),
                   ),
                 ),
